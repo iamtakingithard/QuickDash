@@ -1,0 +1,34 @@
+[package]
+name = "quick_dash"
+description = "A modern alternative to QuickSFV, written on Rust."
+repository = "https://github.com/AndreVuillemot160/QuickDash"
+readme = "README.md"
+categories = ["authentication", "filesystem"]
+license = "Apache-2.0"
+version = "0.5.0"
+authors = ["cerda <cerdamods@protonmail.com", "b1tzxd"]
+edition = "2018"
+
+[dependencies]
+once_cell = "1.8.0"
+tabwriter = "1.2.1"
+num_cpus = "1.13.0"
+futures = { version = "0.3.15", features = ["executor", "thread-pool"] }
+walkdir = "2.3.2"
+regex = "1.5.4"
+clap = "2.33.3"
+crc32fast = "1.2.1"
+pbr = "1.0.4"
+blake2 = "0.9.1"
+md-5 = "0.9.1"
+blake3 = "0.3.8"
+sha-1 = "0.9.6"
+sha2 = "0.9.5"
+sha3 = "0.9.1"
+whirlpool = "0.9.0"
+xxhash-rust = { git = "https://github.com/DoumanAsh/xxhash-rust", features = ["xxh64", "xxh3"] } 
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = 'abort'

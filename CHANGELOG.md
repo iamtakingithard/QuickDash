@@ -1,5 +1,9 @@
 # CHANGELOG (dates are in fromat YYYY-MM-DD)
 
+## 0.5.0 (2021-06-19)
+
+Switching to Futures 0.3
+
 ## 0.4.0 and 0.4.1 (2021-06-08)
 
 Adding support for xxHash.

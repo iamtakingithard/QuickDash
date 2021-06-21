@@ -231,7 +231,7 @@
     clippy::must_use_candidate,
     clippy::cast_precision_loss,
     clippy::clippy::struct_excessive_bools,
-	clippy::unreachable_pub
+    clippy::unreachable_pub
 )]
 
 mod algorithms;

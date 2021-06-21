@@ -89,7 +89,7 @@ pub fn create_hashes<Wo: Write>(
             Err(error) => {
                 let err = format!(
                     "Symlink loop detected at {}",
-                    relative_name(path, &error.path().unwrap())
+                    relative_name(path, error.path().unwrap())
                 );
                 writeln!(io::stderr(), "{}", err).expect("io err");
             }
@@ -153,11 +153,11 @@ fn try_contains(line: &str, hashes: &mut BTreeMap<String, String>) -> Result<(),
     static LINE_RGX2: Lazy<Regex> =
         Lazy::new(|| Regex::new(r"(?i)^(.+?)\t{0,}\s{1,}([[:xdigit:]-]+)$").unwrap());
 
-    if let Some(captures) = LINE_RGX1.captures(&line) {
+    if let Some(captures) = LINE_RGX1.captures(line) {
         hashes.insert(captures[2].to_string(), captures[1].to_uppercase());
         return Ok(());
     }
-    if let Some(captures) = LINE_RGX2.captures(&line) {
+    if let Some(captures) = LINE_RGX2.captures(line) {
         hashes.insert(captures[1].to_string(), captures[2].to_uppercase());
         return Ok(());
     }

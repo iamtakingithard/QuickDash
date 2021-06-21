@@ -15,7 +15,6 @@
 
 //! Module containing various utility functions
 
-use std::iter;
 use std::path::Path;
 
 /// Merges two `Vec`s.
@@ -41,7 +40,7 @@ pub fn vec_merge<T>(mut lhs: Vec<T>, rhs: Vec<T>) -> Vec<T> {
 /// assert_eq!(quick_dash::util::mul_str("DIE! ", 3), "DIE! DIE! DIE! ".to_string());
 /// ```
 pub fn mul_str(what: &str, n: usize) -> String {
-    iter::repeat(what).take(n).collect()
+    what.repeat(n)
 }
 
 /// Create a user-usable path to `what` from `prefix`.

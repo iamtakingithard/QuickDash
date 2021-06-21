@@ -14,7 +14,7 @@
  */
 
 use super::{CompareError, CompareFileResult, CompareResult};
-use crate::util::mul_str;
+use crate::utilities::mul_str;
 use crate::Error;
 use std::io::Write;
 

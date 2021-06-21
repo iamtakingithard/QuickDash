@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-use crate::util::{mul_str, vec_merge};
+use crate::utilities::{mul_str, vec_merge};
 use std::collections::BTreeMap;
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, PartialOrd, Ord)]

@@ -24,7 +24,7 @@ fn main() {
 fn actual_main() -> i32 {
     let opts = quick_dash::Options::parse();
 
-    let hashes = quick_dash::ops::create_hashes(
+    let hashes = quick_dash::operations::create_hashes(
         &opts.dir,
         opts.ignored_files,
         opts.algorithm,
@@ -50,11 +50,11 @@ fn actual_main() -> i32 {
         println!("Made with <3 by Cerda. Repo: https://github.com/AndreVuillemot160/QuickDash/");
         println!();
 
-        match quick_dash::ops::read_hashes(&opts.file) {
+        match quick_dash::operations::read_hashes(&opts.file) {
             Ok(loaded_hashes) => {
                 let compare_result =
-                    quick_dash::ops::compare_hashes(&opts.file.0, hashes, loaded_hashes);
-                quick_dash::ops::write_hash_comparison_results(
+                    quick_dash::operations::compare_hashes(&opts.file.0, hashes, loaded_hashes);
+                quick_dash::operations::write_hash_comparison_results(
                     &mut stdout(),
                     &mut stderr(),
                     compare_result,
@@ -64,7 +64,7 @@ fn actual_main() -> i32 {
         }
         .exit_value()
     } else {
-        quick_dash::ops::write_hashes(&opts.file, opts.algorithm, hashes);
+        quick_dash::operations::write_hashes(&opts.file, opts.algorithm, hashes);
         0
     }
 }

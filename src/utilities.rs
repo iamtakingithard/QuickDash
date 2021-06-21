@@ -25,7 +25,7 @@ use std::path::Path;
 /// let vec1 = vec![0];
 /// let vec2 = vec![1];
 ///
-/// assert_eq!(quick_dash::util::vec_merge(vec1, vec2), vec![0, 1]);
+/// assert_eq!(quick_dash::utilities::vec_merge(vec1, vec2), vec![0, 1]);
 /// ```
 pub fn vec_merge<T>(mut lhs: Vec<T>, rhs: Vec<T>) -> Vec<T> {
     lhs.extend(rhs);
@@ -37,7 +37,7 @@ pub fn vec_merge<T>(mut lhs: Vec<T>, rhs: Vec<T>) -> Vec<T> {
 /// # Examples
 ///
 /// ```
-/// assert_eq!(quick_dash::util::mul_str("LOL! ", 3), "LOL! LOL! LOL! ".to_string());
+/// assert_eq!(quick_dash::utilitiesities::mul_str("LOL! ", 3), "LOL! LOL! LOL! ".to_string());
 /// ```
 pub fn mul_str(what: &str, n: usize) -> String {
     what.repeat(n)
@@ -49,7 +49,7 @@ pub fn mul_str(what: &str, n: usize) -> String {
 ///
 /// ```
 /// # use std::path::Path;
-/// assert_eq!(quick_dash::util::relative_name(Path::new("/usr"), Path::new("/usr/bin/quick_dash")),
+/// assert_eq!(quick_dash::utilities::relative_name(Path::new("/usr"), Path::new("/usr/bin/quick_dash")),
 ///            "bin/quick_dash".to_string());
 /// ```
 pub fn relative_name(prefix: &Path, what: &Path) -> String {

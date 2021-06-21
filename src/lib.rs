@@ -222,7 +222,6 @@
     clippy::cast_sign_loss,
     clippy::enum_glob_use,
     clippy::map_err_ignore,
-    clippy::missing_errors_doc,
     clippy::redundant_pub_crate,
     clippy::wildcard_imports
 )]
@@ -239,8 +238,8 @@ mod error;
 mod hashing;
 mod options;
 
-pub mod ops;
-pub mod util;
+pub mod operations;
+pub mod utilities;
 
 pub use crate::algorithms::Algorithm;
 pub use crate::error::Error;

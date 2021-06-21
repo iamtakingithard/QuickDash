@@ -25,7 +25,7 @@
 mod compare;
 mod write;
 
-use crate::util::{mul_str, relative_name};
+use crate::utilities::{mul_str, relative_name};
 use crate::Error;
 use crate::{hash_file, Algorithm};
 use futures::task::SpawnExt;

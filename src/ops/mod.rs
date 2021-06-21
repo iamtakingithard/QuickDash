@@ -61,7 +61,10 @@ pub fn create_hashes<Wo: Write>(
 
     let mut hashes = BTreeMap::new();
     let mut hashes_f: BTreeMap<String, String> = BTreeMap::new();
-    let pool = executor::ThreadPoolBuilder::new().pool_size(jobs).create().expect("could not create ThreadPool");
+    let pool = executor::ThreadPoolBuilder::new()
+        .pool_size(jobs)
+        .create()
+        .expect("could not create ThreadPool");
 
     let mut walkdir = walkdir.into_iter();
     while let Some(entry) = walkdir.next() {
@@ -128,34 +131,35 @@ pub fn write_hashes(
 
 /// Read uppercased hashes with `write_hashes()` from the specified path or fail
 /// with line numbers not matching pattern.
-pub fn read_hashes(
-    err: &mut dyn Write,
-    file: &(String, PathBuf),
-) -> Result<BTreeMap<String, String>, Error> {
-    static LINE_RGX: Lazy<Regex> =
-        Lazy::new(|| Regex::new(r"(?i)^([[:xdigit:]-]+)\s{2,}(.+?)$").unwrap());
-
+pub fn read_hashes(file: &(String, PathBuf)) -> Result<BTreeMap<String, String>, Error> {
     let mut hashes = BTreeMap::new();
-    let mut failed = false;
 
     let in_file = BufReader::new(File::open(&file.1).unwrap());
-    for (n, line) in in_file.lines().map(Result::unwrap).enumerate() {
-        if !line.is_empty() {
-            match LINE_RGX.captures(&line) {
-                Some(captures) => {
-                    hashes.insert(captures[2].to_string(), captures[1].to_uppercase());
-                }
-                None => {
-                    failed = true;
-                    writeln!(err, "{}:{}: Line doesn't match accepted pattern", file.0, n).unwrap();
-                }
-            };
-        }
+    for line in in_file.lines().map(Result::unwrap) {
+        try_contains(&line, &mut hashes)?;
     }
 
-    if !failed {
-        Ok(hashes)
-    } else {
-        Err(Error::HashesFileParsingFailure)
+    Ok(hashes)
+}
+
+fn try_contains(line: &str, hashes: &mut BTreeMap<String, String>) -> Result<(), Error> {
+    if line.is_empty() {
+        return Err(Error::HashesFileParsingFailure);
     }
+
+    static LINE_RGX1: Lazy<Regex> =
+        Lazy::new(|| Regex::new(r"(?i)^([[:xdigit:]-]+)\s{2,}(.+?)$").unwrap());
+
+    static LINE_RGX2: Lazy<Regex> =
+        Lazy::new(|| Regex::new(r"(?i)^(.+?)\t{0,}\s{1,}([[:xdigit:]-]+)$").unwrap());
+
+    if let Some(captures) = LINE_RGX1.captures(&line) {
+        hashes.insert(captures[2].to_string(), captures[1].to_uppercase());
+        return Ok(());
+    }
+    if let Some(captures) = LINE_RGX2.captures(&line) {
+        hashes.insert(captures[1].to_string(), captures[2].to_uppercase());
+        return Ok(());
+    }
+    Err(Error::HashesFileParsingFailure)
 }

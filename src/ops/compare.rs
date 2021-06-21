@@ -33,7 +33,7 @@ pub enum CompareFileResult {
     },
 }
 
-#[derive(Debug, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Clone, Hash, PartialEq, Eq, Copy)]
 pub enum CompareError {
     HashLengthDiffers {
         previous_len: usize,

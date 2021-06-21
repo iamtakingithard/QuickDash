@@ -50,7 +50,7 @@ fn actual_main() -> i32 {
         println!("Made with <3 by Cerda. Repo: https://github.com/AndreVuillemot160/QuickDash/");
         println!();
 
-        match quick_dash::ops::read_hashes(&mut stderr(), &opts.file) {
+        match quick_dash::ops::read_hashes(&opts.file) {
             Ok(loaded_hashes) => {
                 let compare_result =
                     quick_dash::ops::compare_hashes(&opts.file.0, hashes, loaded_hashes);

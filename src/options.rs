@@ -128,10 +128,14 @@ impl Options {
                 .unwrap_or_default(),
             jobs: match matches.value_of("jobs") {
                 None => num_cpus::get(),
-                Some(s) => match usize::from_str(s).expect("could not parse value") {
-                    0 => u8::MAX as usize, 
-                    i if i > 0 => i,
-                    _ => panic!("Number of jobs cannot be negative!"),
+                Some(s) => match usize::from_str(s) {
+                    Ok(num) => match num {
+                        0 => u8::MAX as usize,
+                        i if i > 0 => i,
+
+                        _ => panic!("Number of jobs cannot be negative!"),
+                    },
+                    Err(num) => panic!("{}", num),
                 },
             },
         }
@@ -177,21 +181,14 @@ impl Options {
 
     fn jobs_validator(s: String) -> Result<(), String> {
         if s.is_empty() {
-            Ok(())
-        } else {
-            i32::from_str(&s)
-                .map_err(|e| format!("jobs: {}", e))
-                .and_then(|i| {
-                    if i < 0 || i == -0 {
-                        Err("Cannot execute a negative amount of jobs".to_string())
-                    } else {
-                        Ok(())
-                    }
-                })
+            return Ok(());
         }
+        usize::from_str(&s)
+            .map_err(|e| format!("jobs: {}", e))
+            .and_then(|_| Err("Not a valid amount of jobs!".to_string()))
     }
 
-    fn file_process(file: Option<&str>, dir: &PathBuf) -> (String, PathBuf) {
+    fn file_process(file: Option<&str>, dir: &Path) -> (String, PathBuf) {
         match file {
             Some(file) => {
                 let mut file = PathBuf::from(file);

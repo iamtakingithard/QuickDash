@@ -188,7 +188,7 @@ impl Options {
             .and_then(|_| Err("Not a valid amount of jobs!".to_string()))
     }
 
-    fn file_process(file: Option<&str>, dir: &PathBuf) -> (String, PathBuf) {
+    fn file_process(file: Option<&str>, dir: &Path) -> (String, PathBuf) {
         match file {
             Some(file) => {
                 let mut file = PathBuf::from(file);

@@ -129,7 +129,7 @@ impl Options {
             jobs: match matches.value_of("jobs") {
                 None => num_cpus::get(),
                 Some(s) => match usize::from_str(s).expect("could not parse value") {
-                    0 => u8::MAX as usize, 
+                    0 => u8::MAX as usize,
                     i if i > 0 => i,
                     _ => panic!("Number of jobs cannot be negative!"),
                 },

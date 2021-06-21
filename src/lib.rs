@@ -55,7 +55,7 @@
 //! [`QuickDash`](https://github.com/AndreVuillemot160/QuickDash) [OPTIONS] [DIRECTORY]
 //!
 //! ## DESCRIPTION
-//! 
+//!
 //! This is a utility for making/checking hashes with blazing-fast speed. All most well-known hash functions are supported, like MD5, SHA1, SHA2 etc.
 //! It's licensed under Apache-2.0 License.
 //!
@@ -130,7 +130,7 @@
 //! --force
 //!
 //! ```text
-//! Rewrite the output file in `--create` mode. 
+//! Rewrite the output file in `--create` mode.
 //! ```
 //!
 //! -j --jobs [jobs]

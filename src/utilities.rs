@@ -37,7 +37,7 @@ pub fn vec_merge<T>(mut lhs: Vec<T>, rhs: Vec<T>) -> Vec<T> {
 /// # Examples
 ///
 /// ```
-/// assert_eq!(quick_dash::utilitiesities::mul_str("LOL! ", 3), "LOL! LOL! LOL! ".to_string());
+/// assert_eq!(quick_dash::utilities::mul_str("LOL! ", 3), "LOL! LOL! LOL! ".to_string());
 /// ```
 pub fn mul_str(what: &str, n: usize) -> String {
     what.repeat(n)

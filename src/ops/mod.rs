@@ -109,7 +109,7 @@ pub fn create_hashes<Wo: Write>(
 
     pb.show_tick = false;
     pb.tick();
-    pb.finish_print("");
+    pb.finish();
     hashes
 }
 

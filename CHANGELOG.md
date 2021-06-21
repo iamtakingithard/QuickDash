@@ -1,5 +1,9 @@
 # CHANGELOG (dates are in fromat YYYY-MM-DD)
 
+## 0.5.1 (2021-06-21)
+
+Ability to read both `hash - filename` and vice versa
+
 ## 0.5.0 (2021-06-19)
 
 Switching to Futures 0.3

@@ -123,7 +123,7 @@ pub fn write_hashes(
 
     hashes.insert(out_file.0.clone(), mul_str("-", algo.hexlen()));
     for (fname, hash) in hashes {
-        writeln!(&mut out, "{}\t{}", hash, fname).unwrap();
+        writeln!(&mut out, "{}  {}", hash, fname).unwrap();
     }
 
     out.flush().unwrap();

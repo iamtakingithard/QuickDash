@@ -26,7 +26,7 @@ sha-1 = "0.9.6"
 sha2 = "0.9.5"
 sha3 = "0.9.1"
 whirlpool = "0.9.0"
-xxhash-rust = { git = "https://github.com/DoumanAsh/xxhash-rust", features = ["xxh64", "xxh3"] } 
+xxhash-rust = { version = "0.8.2", features = ["xxh64", "xxh3"] }
 
 # [profile.release]
 # lto = true

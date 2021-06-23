@@ -27,7 +27,7 @@ jobs:
           os: windows-latest
           rust: stable
         - build: win-gnu
-          os: windows-latest
+          os: windows-2019
           rust: stable-x86_64-gnu
     steps:
     - name: 'Checkout repository'
@@ -51,13 +51,20 @@ jobs:
     - name: 'Build Release'
       run: cargo build --release
       
-    - name: 'Upload Artifact Windows'
+    - name: 'Upload Artifact Windows MSVC'
       if: matrix.os == 'windows-latest'
       uses: actions/upload-artifact@v2.2.4
       with:
-        name: windows
+        name: windows-msvc
         path: target/release/quick_dash.exe
 
+    - name: 'Upload Artifact Windows GNU'
+      if: matrix.os == 'windows-2019'
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        name: windows-gnu
+        path: target/release/quick_dash.exe
+        
     - name: 'Upload Artifact MacOS'
       if: matrix.os == 'macOS-latest'
       uses: actions/upload-artifact@v2.2.4

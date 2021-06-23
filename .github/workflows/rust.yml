@@ -52,21 +52,21 @@ jobs:
       run: cargo build --release
       
     - name: 'Upload Artifact Windows'
-      if: ${{ runner.os == Windows }}
+      if: matrix.os == 'windows-latest'
       uses: actions/upload-artifact@v2.2.4
       with:
         name: ${{ env.PROJECT_NAME_UNDERSCORE }}
         path: target/release/${{ env.PROJECT_NAME_UNDERSCORE }}/${{ env.PROJECT_NAME_UNDERSCORE }}.exe
         
     - name: 'Upload Artifact MacOS'
-      if: ${{ runner.os == macOS }}
+      if: matrix.os == 'macOS-latest'
       uses: actions/upload-artifact@v2.2.4
       with:
         name: ${{ env.PROJECT_NAME_UNDERSCORE }}
         path: target/release/${{ env.PROJECT_NAME_UNDERSCORE }}/${{ env.PROJECT_NAME_UNDERSCORE }}
         
     - name: 'Upload Artifact Linux'
-      if: ${{ matrix.os == Linux }}
+      if: matrix.os == 'ubuntu-latest'
       uses: actions/upload-artifact@v2.2.4
       with:
         name: ${{ env.PROJECT_NAME_UNDERSCORE }}

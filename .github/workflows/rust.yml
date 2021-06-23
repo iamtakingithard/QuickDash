@@ -55,21 +55,20 @@ jobs:
       if: matrix.os == 'windows-latest'
       uses: actions/upload-artifact@v2.2.4
       with:
-        name: ${{ env.PROJECT_NAME_UNDERSCORE }}
+        name: windows
         path: target/release/quick_dash.exe
-      
-# I have no idea about which extension MacOs uses so I removed it for now  
-   # - name: 'Upload Artifact MacOS'
-    #  if: matrix.os == 'macOS-latest'
-     # uses: actions/upload-artifact@v2.2.4
-     # with:
-     #   name: ${{ env.PROJECT_NAME_UNDERSCORE }}
-      #  path: target/release/quick_dash
+
+    - name: 'Upload Artifact MacOS'
+      if: matrix.os == 'macOS-latest'
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        name: macos
+        path: target/release/quick_dash
         
     - name: 'Upload Artifact Linux'
       if: matrix.os == 'ubuntu-latest'
       uses: actions/upload-artifact@v2.2.4
       with:
-        name: ${{ env.PROJECT_NAME_UNDERSCORE }}
+        name: linux
         path: target/release/quick_dash
         

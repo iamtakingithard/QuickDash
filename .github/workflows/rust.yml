@@ -50,6 +50,10 @@ jobs:
         
     - name: 'Build Release'
       run: cargo build --release
+      
+    - name: 'Tar files'
+      run: tar -cvf build.tar target/release/${{ env.PROJECT_NAME_UNDERSCORE }}
+      
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v2.2.4
       with:

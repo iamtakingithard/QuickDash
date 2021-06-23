@@ -201,37 +201,6 @@
     unsafe_code,
     unused_extern_crates
 )]
-#![warn(
-    clippy::dbg_macro,
-    clippy::decimal_literal_representation,
-    clippy::get_unwrap,
-    clippy::missing_docs_in_private_items,
-    clippy::pedantic,
-    clippy::print_stdout,
-    clippy::todo,
-    clippy::unimplemented,
-    clippy::unwrap_used,
-    clippy::use_debug,
-    missing_copy_implementations,
-    missing_debug_implementations,
-    unused_qualifications,
-    variant_size_differences,
-    clippy::cast_lossless,
-    clippy::cast_possible_truncation,
-    clippy::cast_possible_wrap,
-    clippy::cast_sign_loss,
-    clippy::enum_glob_use,
-    clippy::map_err_ignore,
-    clippy::redundant_pub_crate,
-    clippy::wildcard_imports
-)]
-#![allow(
-    clippy::missing_const_for_fn,
-    clippy::must_use_candidate,
-    clippy::cast_precision_loss,
-    clippy::clippy::struct_excessive_bools,
-    clippy::unreachable_pub
-)]
 
 mod algorithms;
 mod error;

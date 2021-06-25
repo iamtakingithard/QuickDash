@@ -51,6 +51,13 @@ jobs:
     - name: 'Build Release'
       run: cargo build --release
       
+    - name: 'Compress executable via UPX (Windoze only)'
+      if: matrix.os == 'windows-latest', 'windows-2019'
+    - uses: clowdhaus/compress@v1.0.0
+      with:
+        commands: '--best --lzma'
+        file: 'target/release/quick_dash.exe'
+
     - name: 'Upload Artifact Windows MSVC'
       if: matrix.os == 'windows-latest'
       uses: actions/upload-artifact@v2.2.4

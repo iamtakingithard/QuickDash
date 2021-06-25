@@ -3,10 +3,9 @@
 
 # QuickDash [![Rust](https://github.com/AndreVuillemot160/QuickDash/actions/workflows/rust.yml/badge.svg)](https://github.com/AndreVuillemot160/QuickDash/actions/workflows/rust.yml) [![](https://meritbadge.herokuapp.com/quickdash)](https://crates.io/crates/quickdash) [![codecov](https://codecov.io/gh/AndreVuillemot160/QuickDash/branch/main/graph/badge.svg?token=YA4NPM8NPJ)](https://codecov.io/gh/AndreVuillemot160/QuickDash)
 A modern alternative to QuickSFV using Rust. It's supports BLAKE3 and BLAKE2 hashes, CRC32, MD5, SHA1, SHA2, SHA3, xxHash
-If you need [`docs`](https://github.com/AndreVuillemot160/QuickDash/blob/main/DOCS.md) click on the docs.
 
-[The docs for user](https://github.com/AndreVuillemot160/QuickDash/blob/main/DOCS.md)
-[The developer docs](https://docs.rs/quickdash/0.5.5/quickdash)
+# [The docs for user](https://github.com/AndreVuillemot160/QuickDash/blob/main/DOCS.md)
+# [The developer docs](https://docs.rs/quickdash/0.5.5/quickdash)
 Mirror: https://git.envs.net/Adrec/QuickDash
 
 Note: the old name `quick_dash` is no longer in use, if anyone wants it feel free to take it on crates.io

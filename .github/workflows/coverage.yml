@@ -6,17 +6,14 @@ env:
   CARGO_TERM_COLOR: always
 jobs:
   test:
-    name: 'test'
+    name: 'coverage'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        build: [stable, macos]
+        build: [stable]
         include:
         - build: stable
           os: ubuntu-latest
-          rust: nightly
-        - build: macos
-          os: macos-latest
           rust: nightly
     steps:
     - name: 'Checkout repository'

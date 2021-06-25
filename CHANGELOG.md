@@ -1,5 +1,13 @@
 # CHANGELOG (dates are in fromat YYYY-MM-DD)
 
+
+## 0.5.2 (2021-06-25)
+
+Added XXH32
+Windows builds are compressed with UPX
+Added code coverage, and wrote some tests
+From this version all builds are built via GitHub actions.
+
 ## 0.5.1 (2021-06-21)
 
 Ability to read both `hash - filename` and vice versa

@@ -1,4 +1,4 @@
-use quick_dash::Algorithm;
+use quickdash::Algorithm;
 use std::str::FromStr;
 
 #[test]

@@ -153,7 +153,7 @@
 //!
 //! ## EXAMPLES
 //!
-//! `quick_dash` [`-v`] [`-f` *infile*]
+//! `quickdash` [`-v`] [`-f` *infile*]
 //!
 //! ```text
 //! Verify the current directory using the saved hashes.

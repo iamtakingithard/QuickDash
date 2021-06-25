@@ -21,8 +21,8 @@ use std::str::FromStr;
 ///
 /// ```
 /// # use std::str::FromStr;
-/// assert_eq!(quick_dash::Algorithm::from_str("BLAKE3"), Ok(quick_dash::Algorithm::BLAKE3));
-/// assert_eq!(quick_dash::Algorithm::from_str("MD5"), Ok(quick_dash::Algorithm::MD5));
+/// assert_eq!(quickdash::Algorithm::from_str("BLAKE3"), Ok(quickdash::Algorithm::BLAKE3));
+/// assert_eq!(quickdash::Algorithm::from_str("MD5"), Ok(quickdash::Algorithm::MD5));
 /// ```
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]

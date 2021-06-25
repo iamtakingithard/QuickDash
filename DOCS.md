@@ -3,7 +3,7 @@ QuickDash 0.5.0
 A modern alternative to QuickSFV using Rust. Made with <3 by Cerda.
 
 USAGE:
-    quick_dash [FLAGS] [OPTIONS] [--] [DIRECTORY]
+    quickdash [FLAGS] [OPTIONS] [--] [DIRECTORY]
 
 FLAGS:
     -c, --create                Make hashes

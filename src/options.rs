@@ -27,7 +27,7 @@ pub struct Options {
     pub dir: PathBuf,
     /// Hashing algorithm to use. Default: `"BLAKE3"`
     pub algorithm: Algorithm,
-    /// Whether to verify or create quick_dash. Default: yes
+    /// Whether to verify or create hashes. Default: yes
     pub verify: bool,
     /// Max recursion depth. Infinite if None. Default: `0`
     pub depth: Option<usize>,

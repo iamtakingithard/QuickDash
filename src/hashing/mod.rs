@@ -107,8 +107,8 @@ pub fn hash_reader<R: Read>(algo: Algorithm, data: &mut R) -> String {
 /// # Examples
 ///
 /// ```
-/// assert_eq!(quick_dash::hash_string(&[0x99, 0xAA, 0xBB, 0xCC]), "99AABBCC".to_string());
-/// assert_eq!(quick_dash::hash_string(&[0x09, 0x0A]), "090A".to_string());
+/// assert_eq!(quickdash::hash_string(&[0x99, 0xAA, 0xBB, 0xCC]), "99AABBCC".to_string());
+/// assert_eq!(quickdash::hash_string(&[0x09, 0x0A]), "090A".to_string());
 /// ```
 pub fn hash_string(bytes: &[u8]) -> String {
     let mut result = String::with_capacity(bytes.len() * 2);

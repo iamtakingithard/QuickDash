@@ -1,5 +1,5 @@
 [package]
-name = "quick_dash"
+name = "quickdash"
 description = "A modern alternative to QuickSFV, written on Rust."
 repository = "https://github.com/AndreVuillemot160/QuickDash"
 readme = "README.md"

@@ -33,3 +33,12 @@ xxhash-rust = { version = "0.8.2", features = ["xxh32", "xxh64", "xxh3"] }
 lto = true
 codegen-units = 1
 # panic = 'abort'
+
+[[bin]]
+name = "quickdash"
+test = false
+doc = false
+
+[lib]
+name = "quickdash"
+path = "src/lib.rs"

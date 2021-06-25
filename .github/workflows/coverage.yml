@@ -2,11 +2,31 @@ name: coverage
 
 on: [push, pull_request]
 
+env:
+  CARGO_TERM_COLOR: always
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  test:
+    name: 'test'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        build: [stable, macos, win-msvc, win-gnu]
+        include:
+        - build: stable
+          os: ubuntu-latest
+          rust: nightly
+        - build: macos
+          os: macos-latest
+          rust: nightly
+        - build: win-msvc
+          os: windows-latest
+          rust: nightly
+        - build: win-gnu
+          os: windows-2019
+          rust: nightly-x86_64-gnu
     steps:
-    - uses: actions/checkout@v2.3.4
+    - name: 'Checkout repository'
+      uses: actions/checkout@v2.3.4
       with:
         fetch-depth: 1
         

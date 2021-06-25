@@ -6,7 +6,7 @@ readme = "README.md"
 keywords = ["cli", "hash", "verify"]
 categories = ["authentication", "filesystem", "command-line-utilities"]
 license = "Apache-2.0"
-version = "0.5.4"
+version = "0.5.5"
 authors = ["cerda <cerdamods@protonmail.com", "b1tzxd"]
 edition = "2018"
 
@@ -36,6 +36,7 @@ codegen-units = 1
 
 [[bin]]
 name = "quickdash"
+path = "src/main.rs"
 test = false
 doc = false
 

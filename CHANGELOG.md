@@ -1,7 +1,7 @@
 # CHANGELOG (dates are in fromat YYYY-MM-DD)
 
 
-## 0.5.2 (2021-06-25)
+## 0.5.3 (2021-06-25)
 
 Added XXH32
 Windows builds are compressed with UPX

@@ -6,6 +6,8 @@ A modern alternative to QuickSFV using Rust. It's supports BLAKE3 and BLAKE2 has
 If you need [`docs`](https://github.com/AndreVuillemot160/QuickDash/blob/main/DOCS.md) click on the docs.
 Mirror: https://git.envs.net/Adrec/QuickDash
 
+Note: the old name `quick_dash` is no longer in use, if anyone wants it feel free to take it on crates.io
+
 ## Benchmarks
 Benchmarks were performed under Windows 10 with Ryzen 5 1600 with batch scripts that are in project.
 For benchmarking the program [`hyperfine`](https://github.com/sharkdp/hyperfine) was used.

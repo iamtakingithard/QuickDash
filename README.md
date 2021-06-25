@@ -26,7 +26,6 @@ You are free to get me at [Element/Matrix](https://matrix.to/#/@cerda:envs.net) 
 
 ## Building
 Well, just go clone the repo, then cd to the cloned repo, and write `cargo build --release`
-My builds are built with nigthly version `cargo +nightly build --all-features --release`
 
 ## License
 This program is licensed under [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/) license.

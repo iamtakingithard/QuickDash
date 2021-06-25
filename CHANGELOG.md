@@ -1,5 +1,8 @@
 # CHANGELOG (dates are in fromat YYYY-MM-DD)
 
+## 0.5.4 and 0.5.5 (2021-06-25)
+
+These releases were intended to fix the problems with crates.io
 
 ## 0.5.3 (2021-06-25)
 

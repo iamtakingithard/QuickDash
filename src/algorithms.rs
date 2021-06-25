@@ -36,6 +36,7 @@ pub enum Algorithm {
     SHA3256,
     SHA3384,
     SHA3512,
+    XXH32,
     XXH64,
     XXH3,
     CRC32,
@@ -50,7 +51,7 @@ impl Algorithm {
     /// Length, in bytes, of the algorithm's output hex string
     pub fn hexlen(&self) -> usize {
         match *self {
-            Algorithm::CRC32 => 8,
+            Algorithm::CRC32 | Algorithm::XXH32 => 8,
             Algorithm::XXH3 | Algorithm::XXH64 => 16,
             Algorithm::MD5 => 32,
             Algorithm::SHA3256 | Algorithm::SHA2256 | Algorithm::BLAKE2S | Algorithm::BLAKE3 => 64,
@@ -80,6 +81,7 @@ impl FromStr for Algorithm {
             "sha3512" | "sha3-512" | "sha-3-512" => Ok(Algorithm::SHA3512),
             "crc32" => Ok(Algorithm::CRC32),
             "xxhash64" | "xxh64" => Ok(Algorithm::XXH64),
+            "xxhash32" | "xxh32" => Ok(Algorithm::XXH32),
             "xxhash3" | "xxh3" => Ok(Algorithm::XXH3),
             "md5" => Ok(Algorithm::MD5),
             "blake2b" => Ok(Algorithm::BLAKE2B),

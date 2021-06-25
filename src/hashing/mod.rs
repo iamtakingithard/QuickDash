@@ -71,6 +71,7 @@ mod sha3_512;
 mod whirlpool;
 mod xxh3;
 mod xxh64;
+mod xxh32;
 
 /// Hash the specified file using the specified hashing algorithm.
 pub fn hash_file(algo: Algorithm, path: &Path) -> String {
@@ -92,6 +93,7 @@ pub fn hash_reader<R: Read>(algo: Algorithm, data: &mut R) -> String {
         Algorithm::SHA3512 => sha3_512::hash(data),
         Algorithm::MD5 => md5::hash(data),
         Algorithm::XXH64 => xxh64::hash(data),
+        Algorithm::XXH32 => xxh32::hash(data),
         Algorithm::XXH3 => xxh3::hash(data),
         Algorithm::BLAKE2B => blake2b::hash(data),
         Algorithm::BLAKE2S => blake2s::hash(data),

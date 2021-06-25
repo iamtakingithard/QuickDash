@@ -13,20 +13,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        build: [linux, macos, win-msvc, win-gnu]
+        build: [linux]
         include:
         - build: linux
           os: ubuntu-latest
           rust: stable
-        - build: macos
-          os: macos-latest
-          rust: stable
-        - build: win-msvc
-          os: windows-latest
-          rust: stable
-        - build: win-gnu
-          os: windows-2019
-          rust: stable-x86_64-gnu
     steps:
     - name: 'Checkout repository'
       uses: actions/checkout@v2.3.4

@@ -14,6 +14,8 @@
  */
 
 /// Enum representing each way the appication can fail.
+use io::stderr;
+
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum Error {
     /// No errors occured, everything executed correctly.
@@ -49,6 +51,19 @@ impl From<i32> for Error {
             2 => Error::HashLengthDiffers,
             3 => Error::HashesFileParsingFailure,
             i => Error::NFilesDiffer(i - 3),
+        }
+    }
+}
+
+impl <'a> std::fmt::Display for Error <'_> {
+    //TODO: Add documentation 
+    pub fn fmt(&self, f: &mut std::fmt::Formatter <'_> ) -> std::fmt::Result {
+        match *self {
+            Error::NoError(str: &str) => wirteln!(io::stderr(), "{}", str),
+            Error::OptionParsingError(str: &str) => wirteln!(io::stderr(), "{}", str),
+            Error::HashLengthDiffers(str: &str) => wirteln!(io::stderr(), "{}", str),
+            Error::HashesFileParsingFailure(str: &str) => wirteln!(io::stderr(), "{}", str),
+            Error::NFilesDiffer(i) => i + 3,
         }
     }
 }

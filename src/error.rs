@@ -15,6 +15,8 @@
 
 /// Enum representing each way the appication can fail.
 use io::stderr;
+use std::fmt;
+use std::error::Error;
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum Error {

@@ -58,14 +58,13 @@ impl From<i32> for Error {
 }
 
 impl <'a> std::fmt::Display for Error <'_> {
-    //TODO: Add documentation 
     pub fn fmt(&self, f: &mut std::fmt::Formatter <'_> ) -> std::fmt::Result {
         match *self {
-            Error::NoError(str: &str) => wirteln!(io::stderr(), "{}", str),
-            Error::OptionParsingError(str: &str) => wirteln!(io::stderr(), "{}", str),
-            Error::HashLengthDiffers(str: &str) => wirteln!(io::stderr(), "{}", str),
-            Error::HashesFileParsingFailure(str: &str) => wirteln!(io::stderr(), "{}", str),
-            Error::NFilesDiffer(i) => i + 3,
+            Error::NoError(err: &str) => write!(io::stderr(), "{}", err),
+            Error::OptionParsingError(err: &str) => write!(io::stderr(), "{}", err),
+            Error::HashLengthDiffers(err: &str) => write!(io::stderr(), "{}", err),
+            Error::HashesFileParsingFailure(err: &str) => write!(io::stderr(), "{}", err),
+            Error::NFilesDiffer(err: &str) => write!(io::stderr(), "{}", err),
         }
     }
 }

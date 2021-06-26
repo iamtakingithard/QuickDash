@@ -188,15 +188,6 @@
 //! ```
 
 #![deny(
-    anonymous_parameters,
-    clippy::all,
-    const_err,
-    illegal_floating_point_literal_pattern,
-    late_bound_lifetime_arguments,
-    path_statements,
-    patterns_in_fns_without_body,
-    trivial_casts,
-    trivial_numeric_casts,
     unsafe_code,
     unused_extern_crates
 )]

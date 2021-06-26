@@ -29,11 +29,23 @@ pub enum Error<'err> {
     NFilesDiffer(i32),
 }
 
+
 impl<'err> std::error::Error for Error<'_> {
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
-        None
+        match *self {
+            // the source here is clap so we can call that
+            Error::ArgumentParsingError(ref clap_err) => Some(clap_err),
+            // couldn't think of anything to use as source here since we only use the numbers to show the length
+            Error::HashLengthDiffers(_, _) => None,
+            // I am not confident in this, parsing failure can happen for a variety of reasons. 
+            // Possible enum for this?  
+            Error::HashesFileParsingFailure(ref err) => Some(err),
+            // No source here either,  just gives the number of files that differ. 
+            Error::NFilesDiffer(_) => None,
+        }
     }
 }
+
 
 impl<'err> fmt::Display for Error<'_> {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {

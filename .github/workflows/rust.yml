@@ -48,7 +48,6 @@ jobs:
       uses: actions-rs/cargo@v1
       with:
         command: clippy
-        args: -- -D warnings
         
     - name: 'Build Release'
       run: cargo build --release

@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main, staging, trying ]
   pull_request:
-    branches: [ main, staging, trying ]
+    branches: [ main ]
 
 env:
   CARGO_TERM_COLOR: always
@@ -96,4 +96,4 @@ jobs:
       with:
         name: linux
         path: target/release/quickdash
-        
+      

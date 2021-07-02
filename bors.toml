@@ -1,5 +1,5 @@
 status = [
-    "bors (ubuntu-latest)",
+    "Build Release",
 ]
 use_squash_merge = true
 timeout_sec = 1200 # 20 min

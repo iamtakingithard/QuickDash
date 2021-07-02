@@ -1,0 +1,4 @@
+status = [
+    "Done",
+]
+use_squash_merge = true

@@ -97,3 +97,10 @@ jobs:
         name: linux
         path: target/release/quickdash
         
+  ending:
+    name: Done
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Done
+        run: echo Done

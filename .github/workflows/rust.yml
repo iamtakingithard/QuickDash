@@ -2,9 +2,9 @@ name: Rust
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, staging, trying ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, staging, trying ]
 
 env:
   CARGO_TERM_COLOR: always
@@ -48,6 +48,7 @@ jobs:
       uses: actions-rs/cargo@v1
       with:
         command: clippy
+        args: -- -D warnings
         
     - name: 'Build Release'
       run: cargo build --release

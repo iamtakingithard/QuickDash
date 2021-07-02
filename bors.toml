@@ -1,5 +1,5 @@
 status = [
-    "Build Release",
+    "test (stable)",
 ]
 use_squash_merge = true
 timeout_sec = 1200 # 20 min

@@ -70,8 +70,8 @@ mod sha3_384;
 mod sha3_512;
 mod whirlpool;
 mod xxh3;
-mod xxh64;
 mod xxh32;
+mod xxh64;
 
 /// Hash the specified file using the specified hashing algorithm.
 pub fn hash_file(algo: Algorithm, path: &Path) -> String {

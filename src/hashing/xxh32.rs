@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
- hash_func!(
+hash_func!(
     xxhash_rust::xxh32::Xxh32::new(1234),
     |xxh32: &mut xxhash_rust::xxh32::Xxh32, buffer: &[u8]| xxh32.update(buffer),
     |xxh32: xxhash_rust::xxh32::Xxh32| format!("{:08X}", (&xxh32.digest()))

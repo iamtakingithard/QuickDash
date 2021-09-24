@@ -80,7 +80,7 @@ impl Options {
                 .short('r')              
                 .long("recursive"),
                 Arg::new(file).validator(Options::file_validator)
-                    .about("--file=[file] -f 'File with hashes to be read/created'")
+                .about("--file=[file] -f 'File with hashes to be read/created'")
                 .short('f')              
                 .long("file"),
                 Arg::new(force)  
@@ -94,8 +94,8 @@ impl Options {
                 .long("no-follow-symlinks"),
                 Arg::new(ignore)
                 .short('i')              
-                .long("ignore"),
-                .about("-i --ignore [file]... 'Ignore specified file(s)'")
+                .long("ignore")
+                .about("-i --ignore [file]... 'Ignore specified file(s)'")б
                 Arg::new(jobs)
                 .short('j')              
                 .long("jobs"),

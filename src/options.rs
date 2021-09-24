@@ -95,7 +95,7 @@ impl Options {
                 Arg::new(ignore)
                 .short('i')              
                 .long("ignore")
-                .about("-i --ignore [file]... 'Ignore specified file(s)'")б
+                .about("-i --ignore [file]... 'Ignore specified file(s)'")
                 Arg::new(jobs)
                 .short('j')              
                 .long("jobs"),

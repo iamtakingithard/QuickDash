@@ -49,28 +49,49 @@ impl Options {
             .about("A modern alternative to QuickSFV using Rust. Made with <3 by Cerda.")
             .version(crate_version!())
             .args(&[
-                Arg::from_usage("[DIRECTORY] 'Directory to hash/verify'")
+                Arg::new(dir)
                     .default_value(".")
+                    .about("[DIRECTORY] 'Directory to hash/verify'")
                     .validator(Options::directory_validator),
-                Arg::from_usage(
-                    "--algorithm=[algorithm] -a 'Hashing algorithm to use. {n}\
-                    Supported algorithms: SHA{1,2-,3-{224,256,384,512}, CRC32, MD5, BLAKE{2B,2S,3}, XXHASH{3,64}'",
-                )
+                Arg::new(algo)
                 .next_line_help(true)
                 .default_value("BLAKE3")
+                .about("--algorithm=[algorithm] -a 'Hashing algorithm to use. {n}\
+                    Supported algorithms: SHA{1,2-,3-{224,256,384,512}, CRC32, MD5, BLAKE{2B,2S,3}, XXHASH{3,64}'")
+                .short('a')
+                .long("algorithm")
                 .validator(Options::algorithm_validator),
-                Arg::from_usage("--create -c 'Make hashes'").overrides_with("verify"),
-                Arg::from_usage("--verify -v 'Verify hashes (default)'").overrides_with("create"),
-                Arg::from_usage("--depth=[depth] -d 'Max recursion depth. `-1` for infinite.'. Default: don't recurse")
-                    .validator(Options::depth_validator)
+                Arg::new(make).overrides_with("verify") 
+                .about("--create -c 'Make hashes'")
+                .short('c')               
+                .long("create"),
+                Arg::new(verify).overrides_with("create")
+                .about("--verify -v 'Verify hashes (default)'")
+                .short('v')              
+                .long("verify"),
+                Arg::new(depth)
+                    .about("--depth=[depth] -d 'Max recursion depth. `-1` for infinite.'. Default: don't recurse")
+                    .short('d')              
+                    .long("depth"),
+                    //.validator(Options::depth_validator)
                     .overrides_with("recursive"),
-                Arg::from_usage("--recursive -r 'Infinite recursion depth.'").overrides_with("depth"),
-                Arg::from_usage("--file=[file] -f 'File with hashes to be read/created'").validator(Options::file_validator),
-                Arg::from_usage("--force 'Override output file'"),
-                Arg::from_usage("--follow-symlinks 'Recurse down symlinks. Default: yes'").overrides_with("no-follow-symlinks"),
-                Arg::from_usage("--no-follow-symlinks 'Don\'t recurse down symlinks'").overrides_with("follow-symlinks"),
-                Arg::from_usage("-i --ignore [file]... 'Ignore specified file(s)'"),
-                Arg::from_usage("-j --jobs=[jobs] '# of threads used for hashing. No/empty value: # of CPU threads. value = 0: maximum of u8 (255)'")
+                Arg::new(recursive).overrides_with("depth")
+                .about("--recursive -r 'Infinite recursion depth.")
+                .short('r')              
+                .long("recursive"),
+                Arg::new(file).validator(Options::file_validator)
+                    .about("--file=[file] -f 'File with hashes to be read/created'")
+                .short('f')              
+                .long("file"),
+                Arg::new(force)  
+                .about("--force 'Override output file'")          
+                .long("force"),
+                Arg::new("--follow-symlinks 'Recurse down symlinks. Default: yes'").overrides_with("no-follow-symlinks"),
+                .about("--follow-symlinks 'Recurse down symlinks. Default: yes'")
+                .long("follow-symlinks"),
+                Arg::new("--no-follow-symlinks 'Don\'t recurse down symlinks'").overrides_with("follow-symlinks"),
+                Arg::new("-i --ignore [file]... 'Ignore specified file(s)'"),
+                Arg::new("-j --jobs=[jobs] '# of threads used for hashing. No/empty value: # of CPU threads. value = 0: maximum of u8 (255)'")
                     .empty_values(true)
                     .allow_hyphen_values(false)
                     .validator(Options::jobs_validator),

@@ -13,58 +13,60 @@
  * limitations under the License.
  */
 
-use std::io::{stderr, stdout};
-use std::process::exit;
+use std::{
+	io::{stderr, stdout},
+	process::exit,
+};
 
 fn main() {
-    let result = actual_main();
-    exit(result);
+	let result = actual_main();
+	exit(result);
 }
 
 fn actual_main() -> i32 {
-    let opts = quickdash::Options::parse();
+	let opts = quickdash::Options::parse();
 
-    let hashes = quickdash::operations::create_hashes(
-        &opts.dir,
-        opts.ignored_files,
-        opts.algorithm,
-        opts.depth,
-        opts.follow_symlinks,
-        opts.jobs,
-        stdout(),
-    );
-    if opts.verify {
-        // Progress bar separator
-        println!();
-        // PS I know it's kinda awful and all. But still cool.
-        println!("  █████   █    ██  ██▓ ▄████▄   ██ ▄█▀▓█████▄  ▄▄▄        ██████  ██░ ██ ");
-        println!("▒██▓  ██▒ ██  ▓██▒▓██▒▒██▀ ▀█   ██▄█▒ ▒██▀ ██▌▒████▄    ▒██    ▒ ▓██░ ██▒");
-        println!("▒██▒  ██░▓██  ▒██░▒██▒▒▓█    ▄ ▓███▄░ ░██   █▌▒██  ▀█▄  ░ ▓██▄   ▒██▀▀██░");
-        println!("░██  █▀ ░▓▓█  ░██░░██░▒▓▓▄ ▄██▒▓██ █▄ ░▓█▄   ▌░██▄▄▄▄██   ▒   ██▒░▓█ ░██ ");
-        println!("░▒███▒█▄ ▒▒█████▓ ░██░▒ ▓███▀ ░▒██▒ █▄░▒████▓  ▓█   ▓██▒▒██████▒▒░▓█▒░██▓");
-        println!("░░ ▒▒░ ▒ ░▒▓▒ ▒ ▒ ░▓  ░ ░▒ ▒  ░▒ ▒▒ ▓▒ ▒▒▓  ▒  ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒");
-        println!(" ░ ▒░  ░ ░░▒░ ░ ░  ▒ ░  ░  ▒   ░ ░▒ ▒░ ░ ▒  ▒   ▒   ▒▒ ░░ ░▒  ░ ░ ▒ ░▒░ ░");
-        println!("   ░   ░  ░░░ ░ ░  ▒ ░░        ░ ░░ ░  ░ ░  ░   ░   ▒   ░  ░  ░   ░  ░░ ░");
-        println!("     ░       ░      ░  ░ ░      ░  ░      ░          ░  ░      ░   ░  ░  ░");
-        println!();
-        println!("Made with <3 by Cerda. Repo: https://github.com/AndreVuillemot160/QuickDash/");
-        println!();
+	let hashes = quickdash::operations::create_hashes(
+		&opts.dir,
+		opts.ignored_files,
+		opts.algorithm,
+		opts.depth,
+		opts.follow_symlinks,
+		opts.jobs,
+		stdout(),
+	);
+	if opts.verify {
+		// Progress bar separator
+		println!();
+		// PS I know it's kinda awful and all. But still cool.
+		println!("  █████   █    ██  ██▓ ▄████▄   ██ ▄█▀▓█████▄  ▄▄▄        ██████  ██░ ██ ");
+		println!("▒██▓  ██▒ ██  ▓██▒▓██▒▒██▀ ▀█   ██▄█▒ ▒██▀ ██▌▒████▄    ▒██    ▒ ▓██░ ██▒");
+		println!("▒██▒  ██░▓██  ▒██░▒██▒▒▓█    ▄ ▓███▄░ ░██   █▌▒██  ▀█▄  ░ ▓██▄   ▒██▀▀██░");
+		println!("░██  █▀ ░▓▓█  ░██░░██░▒▓▓▄ ▄██▒▓██ █▄ ░▓█▄   ▌░██▄▄▄▄██   ▒   ██▒░▓█ ░██ ");
+		println!("░▒███▒█▄ ▒▒█████▓ ░██░▒ ▓███▀ ░▒██▒ █▄░▒████▓  ▓█   ▓██▒▒██████▒▒░▓█▒░██▓");
+		println!("░░ ▒▒░ ▒ ░▒▓▒ ▒ ▒ ░▓  ░ ░▒ ▒  ░▒ ▒▒ ▓▒ ▒▒▓  ▒  ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒");
+		println!(" ░ ▒░  ░ ░░▒░ ░ ░  ▒ ░  ░  ▒   ░ ░▒ ▒░ ░ ▒  ▒   ▒   ▒▒ ░░ ░▒  ░ ░ ▒ ░▒░ ░");
+		println!("   ░   ░  ░░░ ░ ░  ▒ ░░        ░ ░░ ░  ░ ░  ░   ░   ▒   ░  ░  ░   ░  ░░ ░");
+		println!("     ░       ░      ░  ░ ░      ░  ░      ░          ░  ░      ░   ░  ░  ░");
+		println!();
+		println!("Made with <3 by Cerda. Repo: https://github.com/AndreVuillemot160/QuickDash/");
+		println!();
 
-        match quickdash::operations::read_hashes(&opts.file) {
-            Ok(loaded_hashes) => {
-                let compare_result =
-                    quickdash::operations::compare_hashes(&opts.file.0, hashes, loaded_hashes);
-                quickdash::operations::write_hash_comparison_results(
-                    &mut stdout(),
-                    &mut stderr(),
-                    compare_result,
-                )
-            }
-            Err(rval) => rval,
-        }
-        .exit_value()
-    } else {
-        quickdash::operations::write_hashes(&opts.file, opts.algorithm, hashes);
-        0
-    }
+		match quickdash::operations::read_hashes(&opts.file) {
+			Ok(loaded_hashes) => {
+				let compare_result =
+					quickdash::operations::compare_hashes(&opts.file.0, hashes, loaded_hashes);
+				quickdash::operations::write_hash_comparison_results(
+					&mut stdout(),
+					&mut stderr(),
+					compare_result,
+				)
+			}
+			Err(rval) => rval,
+		}
+		.exit_value()
+	} else {
+		quickdash::operations::write_hashes(&opts.file, opts.algorithm, hashes);
+		0
+	}
 }

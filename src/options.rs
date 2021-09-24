@@ -86,12 +86,20 @@ impl Options {
                 Arg::new(force)  
                 .about("--force 'Override output file'")          
                 .long("force"),
-                Arg::new("--follow-symlinks 'Recurse down symlinks. Default: yes'").overrides_with("no-follow-symlinks"),
+                Arg::new(follow_symlinks).overrides_with("no-follow-symlinks"),
                 .about("--follow-symlinks 'Recurse down symlinks. Default: yes'")
                 .long("follow-symlinks"),
-                Arg::new("--no-follow-symlinks 'Don\'t recurse down symlinks'").overrides_with("follow-symlinks"),
-                Arg::new("-i --ignore [file]... 'Ignore specified file(s)'"),
-                Arg::new("-j --jobs=[jobs] '# of threads used for hashing. No/empty value: # of CPU threads. value = 0: maximum of u8 (255)'")
+                Arg::new(no_symlinks).overrides_with("follow-symlinks"),
+                .about("--no-follow-symlinks 'Don\'t recurse down symlinks'")
+                .long("no-follow-symlinks"),
+                Arg::new(ignore)
+                .short('i')              
+                .long("ignore"),
+                .about("-i --ignore [file]... 'Ignore specified file(s)'")
+                Arg::new(jobs)
+                .short('j')              
+                .long("jobs"),
+                .about("-j --jobs=[jobs] '# of threads used for hashing. No/empty value: # of CPU threads. value = 0: maximum of u8 (255)")
                     .empty_values(true)
                     .allow_hyphen_values(false)
                     .validator(Options::jobs_validator),

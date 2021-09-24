@@ -1,0 +1,24 @@
+[env]
+CARGO_MAKE_EXTEND_WORKSPACE_MAKEFILE = true
+
+[tasks.format]
+install_crate = "rustfmt"
+command = "cargo"
+args = ["fmt", "--all", "--", "--check"]
+
+[tasks.clippy]
+command = "cargo"
+args = ["clippy", "--all", "--", "-D", "warnings"]
+
+[tasks.upgrade]
+command = "cargo"
+args = ["upgrade", "--workspace"]
+
+[tasks.release]
+dependencies = [
+    "upgrade",
+    "format",
+    "clippy",
+#    "build-release",
+    "heroku"
+]

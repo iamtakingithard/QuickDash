@@ -1,0 +1,24 @@
+# Core
+hard_tabs = true
+newline_style = "Unix"
+
+# Miscellaneous
+condense_wildcard_suffixes = true
+format_code_in_doc_comments = true
+format_macro_bodies = true
+format_macro_matchers = true
+format_strings = true
+reorder_modules = true
+use_field_init_shorthand = true
+wrap_comments = true
+
+# Imports
+group_imports = "StdExternalCrate"
+imports_granularity = "Crate"
+imports_indent = "Block"
+imports_layout = "HorizontalVertical"
+reorder_imports = true
+
+# Reports
+report_fixme = "Unnumbered"
+report_todo = "Unnumbered"

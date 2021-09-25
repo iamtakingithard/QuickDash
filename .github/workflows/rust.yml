@@ -111,14 +111,6 @@ jobs:
           files: ${{ github.workspace }}/target/release/quickdash.exe
           args: --best --lzma
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-              name: quickdash-${{ matrix.triple.target }}
-              path: |
-               ${{ github.workspace }}/target/release/quickdash
-               ${{ github.workspace }}/target/${{ matrix.triple.target }}/release/quickdash
-               
       - name: Upload Artifacts (windows)
         uses: actions/upload-artifact@v2
         if: matrix.os == 'windows-latest'
@@ -128,6 +120,14 @@ jobs:
                ${{ github.workspace }}/target/release/quickdash.exe
                ${{ github.workspace }}/target/${{ matrix.triple.target }}/release/quickdash.exe
 
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+              name: quickdash-${{ matrix.triple.target }}
+              path: |
+               ${{ github.workspace }}/target/release/quickdash
+               ${{ github.workspace }}/target/${{ matrix.triple.target }}/release/quickdash
+               
   tests:
     needs: [check]
     name: Test ${{ matrix.os }} (rust ${{matrix.toolchain}})

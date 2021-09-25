@@ -107,13 +107,17 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
               name: quickdash-${{ matrix.triple.target }}
-              path: ${{ github.workspace }}/target/${{ matrix.triple.target }}/release/quickdash
+              path: |
+               ${{ github.workspace }}/target/release/quickdash
+               ${{ github.workspace }}/target/${{ matrix.triple.target }}/release/quickdash
                
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
               name: quickdash-${{ matrix.triple.target }}
-              path: ${{ github.workspace }}/target/release/quickdash               
+              path: |
+               ${{ github.workspace }}/target/release/quickdash
+               ${{ github.workspace }}/target/${{ matrix.triple.target }}/release/quickdash
 
   tests:
     needs: [check]

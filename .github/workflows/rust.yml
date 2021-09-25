@@ -108,7 +108,9 @@ jobs:
         uses: crazy-max/ghaction-upx@v1.4.0
         with:
           version: latest
-          files: ${{ github.workspace }}/target/release/quickdash.exe
+          files: |
+            ${{ github.workspace }}\target\release\quickdash.exe
+            ${{ github.workspace }}\target\${{ matrix.triple.target }}\release\quickdash.exe
           args: --best --lzma
 
       - name: Upload Artifacts

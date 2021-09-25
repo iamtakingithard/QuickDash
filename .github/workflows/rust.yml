@@ -9,17 +9,18 @@ on:
 env:
   CARGO_TERM_COLOR: always
 jobs:
-  rustfmt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: nightly
-          override: true
-          components: rustfmt
-      - run: cargo fmt -- --check
+#temp removel of rustfmt until this will be merged https://github.com/AndreVuillemot160/QuickDash/pull/11
+#  rustfmt:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: actions-rs/toolchain@v1
+#        with:
+#          profile: minimal
+#          toolchain: nightly
+#          override: true
+#          components: rustfmt
+#      - run: cargo fmt -- --check
 
   clippy:
     runs-on: ${{ matrix.os }}
@@ -50,7 +51,7 @@ jobs:
           - { os: 'ubuntu-latest',  target: 'i686-unknown-linux-gnu',   cross: true }
           - { os: 'macos-latest',   target: 'x86_64-apple-darwin',      cross: false }
           - { os: 'windows-latest', target: 'x86_64-pc-windows-msvc',   cross: false }
-          - { os: 'windows-latest', target: 'i686-pc-windows-msvc',   cross: false }
+          #- { os: 'windows-latest', target: 'i686-pc-windows-msvc',   cross: false } // gotta fix that later :/
           ## iOS
           - { os: 'macos-latest', target: 'aarch64-apple-ios', cross: true }
           - { os: 'macos-latest', target: 'x86_64-apple-ios', cross: true }
@@ -92,7 +93,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
               name: quickdash-${{ matrix.triple.target }}
-              path: target/release/quickdash*/       
+              path: target/release/quickdash/       
 
   tests:
     needs: [check]

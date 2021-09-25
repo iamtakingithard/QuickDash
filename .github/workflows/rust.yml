@@ -89,7 +89,13 @@ jobs:
         with:
           profile: minimal
           toolchain: ${{ matrix.toolchain }}
-          override: true        
+          override: true  
+          
+      - name: Install Croos (git)
+        uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: --git https://github.com/rust-embedded/cross
 
       - name: Check
         uses: actions-rs/cargo@v1

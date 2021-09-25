@@ -9,91 +9,158 @@ on:
 env:
   CARGO_TERM_COLOR: always
 jobs:
-  test:
-    name: 'test'
+#temp removel of rustfmt until this will be merged https://github.com/AndreVuillemot160/QuickDash/pull/11
+#  rustfmt:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: actions-rs/toolchain@v1
+#        with:
+#          profile: minimal
+#          toolchain: nightly
+#          override: true
+#          components: rustfmt
+#      - run: cargo fmt -- --check
+
+  clippy:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        build: [stable, macos, win-msvc, win-gnu]
-        include:
-        - build: stable
-          os: ubuntu-latest
-          rust: stable
-        - build: macos
-          os: macos-latest
-          rust: stable
-        - build: win-msvc
-          os: windows-latest
-          rust: stable
-        - build: win-gnu
-          os: windows-2019
-          rust: stable-x86_64-gnu
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
     steps:
-    - name: 'Checkout repository'
-      uses: actions/checkout@v2.3.4
-      with:
-        fetch-depth: 1
-        
-    - name: 'Install Rust'
-      uses: actions-rs/toolchain@v1.0.6
-      with:
-        toolchain: ${{ matrix.rust }}
-        override: true
-        profile: default
-        
-    - name: 'Enable caching'
-      uses: Swatinem/rust-cache@v1.3.0
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          override: true
+          components: clippy
+      - run: cargo clippy -- -D warnings
 
-    - name: 'Clippy'
-      uses: actions-rs/cargo@v1
-      with:
-        command: clippy
-        args: -- -D warnings
-        
-    - name: 'Build Release'
-      run: cargo build --release
+  check:
+    name: Check ${{ matrix.toolchain }} / ${{ matrix.triple.target }}
+    runs-on: ${{ matrix.triple.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        triple:
+          - { os: 'ubuntu-latest',  target: 'x86_64-unknown-linux-gnu', cross: false }
+          - { os: 'ubuntu-latest',  target: 'i686-unknown-linux-gnu',   cross: true }
+          - { os: 'macos-latest',   target: 'x86_64-apple-darwin',      cross: false }
+          - { os: 'windows-latest', target: 'x86_64-pc-windows-msvc',   cross: false }
+          #- { os: 'windows-latest', target: 'i686-pc-windows-msvc',   cross: false } // gotta fix that later :/
+          ## iOS
+          - { os: 'macos-latest', target: 'aarch64-apple-ios', cross: true }
+          - { os: 'macos-latest', target: 'x86_64-apple-ios', cross: true }
+          ## ARM64
+          - { os: 'ubuntu-latest', target: 'aarch64-unknown-linux-gnu',  cross: true }
+          - { os: 'ubuntu-latest', target: 'aarch64-unknown-linux-musl', cross: true }
+          ## ARMv7
+          - { os: 'ubuntu-latest', target: 'armv7-unknown-linux-gnueabihf',  cross: true }
+          - { os: 'ubuntu-latest', target: 'armv7-unknown-linux-musleabihf', cross: true }
+          ## ARMv6
+          - { os: 'ubuntu-latest', target: 'arm-unknown-linux-gnueabihf',  cross: true }
+          - { os: 'ubuntu-latest', target: 'arm-unknown-linux-musleabihf', cross: true }
+          # Android
+          - { os: 'ubuntu-latest', target: 'aarch64-linux-android', cross: true }
+          - { os: 'ubuntu-latest', target: 'armv7-linux-androideabi', cross: true }
+          - { os: 'ubuntu-latest', target: 'x86_64-linux-android', cross: true }
+          - { os: 'ubuntu-latest', target: 'i686-linux-android', cross: true }
+        toolchain:
+          #- "1.54.0"  # minimum supported rust version
+          #- stable
+          - nightly
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 1
+          
+      - name: 'Enable caching'
+        uses: Swatinem/rust-cache@v1.3.0
       
-    - name: 'Compress executable via UPX (Windows MSVC)'
-      if: matrix.os == 'windows-latest'
-      uses: crazy-max/ghaction-upx@v1.4.0
-      with:
-        version: latest
-        files: target/release/quickdash.exe
-        args: --best --lzma
-        
-    - name: 'Compress executable via UPX (Windows GNU)'
-      if: matrix.os == 'windows-2019'
-      uses: crazy-max/ghaction-upx@v1.4.0
-      with:
-        version: latest
-        files: target/release/quickdash.exe
-        args: --best --lzma
-         
-    - name: 'Upload Artifact Windows MSVC'
-      if: matrix.os == 'windows-latest'
-      uses: actions/upload-artifact@v2.2.4
-      with:
-        name: windows-msvc
-        path: target/release/quickdash.exe
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.toolchain }}
+          override: true        
 
-    - name: 'Upload Artifact Windows GNU'
-      if: matrix.os == 'windows-2019'
-      uses: actions/upload-artifact@v2.2.4
-      with:
-        name: windows-gnu
-        path: target/release/quickdash.exe
-        
-    - name: 'Upload Artifact MacOS'
-      if: matrix.os == 'macOS-latest'
-      uses: actions/upload-artifact@v2.2.4
-      with:
-        name: macos
-        path: target/release/quickdash
-        
-    - name: 'Upload Artifact Linux'
-      if: matrix.os == 'ubuntu-latest'
-      uses: actions/upload-artifact@v2.2.4
-      with:
-        name: linux
-        path: target/release/quickdash
-      
+      - name: Check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+          args: --target=${{ matrix.triple.target }} --manifest-path=Cargo.toml
+          use-cross: ${{ matrix.triple.cross }}
+
+      - name: Build release
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --target=${{ matrix.triple.target }} --manifest-path=Cargo.toml --all-features --release
+          use-cross: ${{ matrix.triple.cross }}
+
+      - name: 'Compress executable via UPX (Windows MSVC)'
+        if: matrix.os == 'windows-latest'
+        uses: crazy-max/ghaction-upx@v1.4.0
+        with:
+          version: latest
+          files: ${{ github.workspace }}/target/release/quickdash.exe
+          args: --best --lzma
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+              name: quickdash-${{ matrix.triple.target }}
+              path: |
+               ${{ github.workspace }}/target/release/quickdash
+               ${{ github.workspace }}/target/${{ matrix.triple.target }}/release/quickdash
+               
+      - name: Upload Artifacts (windows)
+        uses: actions/upload-artifact@v2
+        if: matrix.os == 'windows-latest'
+        with:
+              name: quickdash-${{ matrix.triple.target }}
+              path: |
+               ${{ github.workspace }}/target/release/quickdash.exe
+               ${{ github.workspace }}/target/${{ matrix.triple.target }}/release/quickdash.exe
+
+  tests:
+    needs: [check]
+    name: Test ${{ matrix.os }} (rust ${{matrix.toolchain}})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        toolchain:
+          #- "1.54.0"  # minimum supported rust version
+          #- stable
+          - nightly
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.toolchain }}
+          override: true
+      - name: Check docs
+        run: cargo doc
+        if: matrix.toolchain == 'nightly'
+      - name: Execute tests (not mac)
+        run: cargo test
+        if: matrix.os != 'macos-latest'
+        env:
+          RUST_BACKTRACE: full
+      - name: Execute tests (mac)
+        run: cargo test -- --test-threads 1
+        if: matrix.os == 'macos-latest'
+        env:
+          RUST_BACKTRACE: full

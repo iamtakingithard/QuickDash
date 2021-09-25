@@ -49,17 +49,15 @@ jobs:
         triple:
           - { os: 'ubuntu-latest',  target: 'x86_64-unknown-linux-gnu', cross: false }
           - { os: 'ubuntu-latest',  target: 'i686-unknown-linux-gnu',   cross: true }
-          - { os: 'ubuntu-latest',  target: 'x86_64-unknown-freebsd',   cross: true }
           - { os: 'macos-latest',   target: 'x86_64-apple-darwin',      cross: false }
           - { os: 'windows-latest', target: 'x86_64-pc-windows-msvc',   cross: false } 
-          #- { os: 'windows-latest', target: 'i686-pc-windows-msvc',   cross: false } // gotta fix that later :/
           ## iOS
           - { os: 'macos-latest', target: 'aarch64-apple-ios', cross: true }
           - { os: 'macos-latest', target: 'x86_64-apple-ios', cross: true }
           ## ARM64
           - { os: 'ubuntu-latest', target: 'aarch64-unknown-linux-gnu',  cross: true }
           - { os: 'ubuntu-latest', target: 'aarch64-unknown-linux-musl', cross: true }
-          - { os: 'macos-latest',  target: 'aarch64-apple-darwin', cross: true }
+          - { os: 'macos-latest',  target: 'aarch64-apple-darwin', cross: false }
           ## ARMv7
           - { os: 'ubuntu-latest', target: 'armv7-unknown-linux-gnueabihf',  cross: true }
           - { os: 'ubuntu-latest', target: 'armv7-unknown-linux-musleabihf', cross: true }
@@ -90,12 +88,6 @@ jobs:
           profile: minimal
           toolchain: ${{ matrix.toolchain }}
           override: true  
-          
-      - name: Install Croos (git)
-        uses: actions-rs/cargo@v1
-        with:
-          command: install
-          args: --git https://github.com/rust-embedded/cross
 
       - name: Check
         uses: actions-rs/cargo@v1

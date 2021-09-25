@@ -103,14 +103,14 @@ jobs:
           args: --target=${{ matrix.triple.target }} --manifest-path=Cargo.toml --all-features --release
           use-cross: ${{ matrix.triple.cross }}
 
-      - name: Upload Artifacts (Cross)
-        uses: actions/upload-artifact@v2
+      - name: 'Compress executable via UPX (Windows MSVC)'
+        if: matrix.os == 'windows-latest'
+        uses: crazy-max/ghaction-upx@v1.4.0
         with:
-              name: quickdash-${{ matrix.triple.target }}
-              path: |
-               ${{ github.workspace }}/target/release/quickdash
-               ${{ github.workspace }}/target/${{ matrix.triple.target }}/release/quickdash
-               
+          version: latest
+          files: ${{ github.workspace }}/target/release/quickdash.exe
+          args: --best --lzma
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -118,6 +118,14 @@ jobs:
               path: |
                ${{ github.workspace }}/target/release/quickdash
                ${{ github.workspace }}/target/${{ matrix.triple.target }}/release/quickdash
+               
+      - name: Upload Artifacts (windows)
+        uses: actions/upload-artifact@v2
+        with:
+              name: quickdash-${{ matrix.triple.target }}
+              path: |
+               ${{ github.workspace }}/target/release/quickdash.exe
+               ${{ github.workspace }}/target/${{ matrix.triple.target }}/release/quickdash.exe
 
   tests:
     needs: [check]

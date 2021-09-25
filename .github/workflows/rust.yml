@@ -100,7 +100,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
               name: quickdash-${{ matrix.triple.target }}
-              path: target/release/quickdash    
+              path: target/release/    
 
   tests:
     needs: [check]

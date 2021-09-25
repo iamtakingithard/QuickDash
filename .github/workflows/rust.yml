@@ -111,6 +111,7 @@ jobs:
                ${{ github.workspace }}/target/x86_64-pc-windows-msvc/quickdash.exe
                ${{ github.workspace }}/target/${{ matrix.triple.target }}/quickdash
                ${{ github.workspace }}/target/release/quickdash
+              if-no-files-found: ignore
 
   tests:
     needs: [check]

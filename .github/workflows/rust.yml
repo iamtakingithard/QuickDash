@@ -89,6 +89,12 @@ jobs:
           toolchain: ${{ matrix.toolchain }}
           override: true  
 
+      - name: Install toolchain (mac os arm64)
+        if: matrix.os == 'macos-latest'
+        uses: actions-rs/toolchain@v1
+        with:
+          target: aarch64-apple-darwin
+
       - name: Check
         uses: actions-rs/cargo@v1
         with:

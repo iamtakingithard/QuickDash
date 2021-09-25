@@ -11,6 +11,7 @@ command = "cargo"
 args = ["clippy", "--all", "--", "-D", "warnings"]
 
 [tasks.upgrade]
+install_crate = "cargo-edit"
 command = "cargo"
 args = ["upgrade", "--workspace"]
 

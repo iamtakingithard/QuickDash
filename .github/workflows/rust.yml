@@ -74,7 +74,14 @@ jobs:
           #- stable
           - nightly
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 1
+          
+      - name: 'Enable caching'
+        uses: Swatinem/rust-cache@v1.3.0
+      
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
@@ -93,7 +100,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
               name: quickdash-${{ matrix.triple.target }}
-              path: ${{ github.workspace }}/target/release/quickdash       
+              path: target/release/quickdash    
 
   tests:
     needs: [check]

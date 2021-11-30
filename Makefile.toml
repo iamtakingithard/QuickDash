@@ -20,6 +20,5 @@ dependencies = [
     "upgrade",
     "format",
     "clippy",
-#    "build-release",
-    "heroku"
+    #    "build-release",
 ]

@@ -27,7 +27,7 @@ blake3 = "1.2.0"
 sha-1 = "0.9.8"
 sha2 = "0.9.8"
 sha3 = "0.9.1"
-whirlpool = "0.9.0"
+whirlpool = "0.10.0"
 xxhash-rust = { version = "0.8.2", features = ["xxh32", "xxh64", "xxh3"] }
 
 [profile.release]

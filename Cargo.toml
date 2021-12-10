@@ -33,6 +33,7 @@ xxhash-rust = { version = "0.8.2", features = ["xxh32", "xxh64", "xxh3"] }
 [profile.release]
 lto = true
 codegen-units = 1
+debug = false
 # panic = 'abort'
 
 [[bin]]

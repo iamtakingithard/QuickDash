@@ -13,7 +13,8 @@
  * limitations under the License.
  */
 
-use crate::hash_string;
 use md5::{Digest, Md5};
+
+use crate::hash_string;
 
 hash_func_write!(Md5::new(), |ctx: Md5| hash_string(&*ctx.finalize()));

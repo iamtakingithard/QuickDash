@@ -13,11 +13,12 @@
  * limitations under the License.
  */
 
-use crate::hash_string;
 use whirlpool::{Digest, Whirlpool};
 
+use crate::hash_string;
+
 hash_func!(
-    Whirlpool::new(),
-    |whirlpool: &mut Whirlpool, buffer: &[u8]| whirlpool.update(buffer),
-    |whirlpool: Whirlpool| hash_string(&whirlpool.finalize())
+	Whirlpool::new(),
+	|whirlpool: &mut Whirlpool, buffer: &[u8]| whirlpool.update(buffer),
+	|whirlpool: Whirlpool| hash_string(&whirlpool.finalize())
 );

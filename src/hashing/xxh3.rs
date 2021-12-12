@@ -14,7 +14,7 @@
  */
 
 hash_func!(
-    xxhash_rust::xxh3::Xxh3::new(),
-    |xxh3: &mut xxhash_rust::xxh3::Xxh3, buffer: &[u8]| xxh3.update(buffer),
-    |xxh3: xxhash_rust::xxh3::Xxh3| format!("{:08X}", (&xxh3.digest()))
+	xxhash_rust::xxh3::Xxh3::new(),
+	|xxh3: &mut xxhash_rust::xxh3::Xxh3, buffer: &[u8]| xxh3.update(buffer),
+	|xxh3: xxhash_rust::xxh3::Xxh3| format!("{:08X}", (&xxh3.digest()))
 );

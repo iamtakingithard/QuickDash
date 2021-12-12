@@ -28,8 +28,8 @@ use std::path::Path;
 /// assert_eq!(quickdash::utilities::vec_merge(vec1, vec2), vec![0, 1]);
 /// ```
 pub fn vec_merge<T>(mut lhs: Vec<T>, rhs: Vec<T>) -> Vec<T> {
-    lhs.extend(rhs);
-    lhs
+	lhs.extend(rhs);
+	lhs
 }
 
 /// Create a string consisting of `n` repetitions of `what`.
@@ -37,10 +37,13 @@ pub fn vec_merge<T>(mut lhs: Vec<T>, rhs: Vec<T>) -> Vec<T> {
 /// # Examples
 ///
 /// ```
-/// assert_eq!(quickdash::utilities::mul_str("LOL! ", 3), "LOL! LOL! LOL! ".to_string());
+/// assert_eq!(
+/// 	quickdash::utilities::mul_str("LOL! ", 3),
+/// 	"LOL! LOL! LOL! ".to_string()
+/// );
 /// ```
 pub fn mul_str(what: &str, n: usize) -> String {
-    what.repeat(n)
+	what.repeat(n)
 }
 
 /// Create a user-usable path to `what` from `prefix`.
@@ -49,13 +52,15 @@ pub fn mul_str(what: &str, n: usize) -> String {
 ///
 /// ```
 /// # use std::path::Path;
-/// assert_eq!(quickdash::utilities::relative_name(Path::new("/usr"), Path::new("/usr/bin/quickdash")),
-///            "bin/quickdash".to_string());
+/// assert_eq!(
+/// 	quickdash::utilities::relative_name(Path::new("/usr"), Path::new("/usr/bin/quickdash")),
+/// 	"bin/quickdash".to_string()
+/// );
 /// ```
 pub fn relative_name(prefix: &Path, what: &Path) -> String {
-    what.strip_prefix(prefix)
-        .unwrap()
-        .to_str()
-        .unwrap()
-        .replace("\\", "/")
+	what.strip_prefix(prefix)
+		.unwrap()
+		.to_str()
+		.unwrap()
+		.replace("\\", "/")
 }

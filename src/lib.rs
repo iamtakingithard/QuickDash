@@ -17,7 +17,8 @@
 //!
 //! # Library doc
 //!
-//! The library it's self is used in this project as well due it contains all needed functions.
+//! The library it's self is used in this project as well due it contains all
+//! needed functions.
 //!
 //! ## Data flow
 //!
@@ -56,8 +57,9 @@
 //!
 //! ## DESCRIPTION
 //!
-//! This is a utility for making/checking hashes with blazing-fast speed. All most well-known hash functions are supported, like MD5, SHA1, SHA2 etc.
-//! It's licensed under Apache-2.0 License.
+//! This is a utility for making/checking hashes with blazing-fast speed. All
+//! most well-known hash functions are supported, like MD5, SHA1, SHA2 etc. It's
+//! licensed under Apache-2.0 License.
 //!
 //! ## OPTIONS
 //!
@@ -67,7 +69,6 @@
 //! Quite simple, select the hash you want. Case-insensitive.
 //!
 //! Supported algorithms: SHA{1,2-,3-{224,256,384,512}, CRC32, MD5, BLAKE{2B,2S,3}, XXH3, XXHASH64
-//!
 //! ```
 //!
 //! -c --create
@@ -188,18 +189,18 @@
 //! ```
 
 #![deny(
-    anonymous_parameters,
-    clippy::all,
-    const_err,
-    illegal_floating_point_literal_pattern,
-    late_bound_lifetime_arguments,
-    path_statements,
-    patterns_in_fns_without_body,
-    rust_2018_idioms,
-    trivial_casts,
-    trivial_numeric_casts,
-    unsafe_code,
-    unused_extern_crates
+	anonymous_parameters,
+	clippy::all,
+	const_err,
+	illegal_floating_point_literal_pattern,
+	late_bound_lifetime_arguments,
+	path_statements,
+	patterns_in_fns_without_body,
+	rust_2018_idioms,
+	trivial_casts,
+	trivial_numeric_casts,
+	unsafe_code,
+	unused_extern_crates
 )]
 
 mod algorithms;
@@ -210,7 +211,4 @@ mod options;
 pub mod operations;
 pub mod utilities;
 
-pub use crate::algorithms::Algorithm;
-pub use crate::error::Error;
-pub use crate::hashing::*;
-pub use crate::options::Options;
+pub use crate::{algorithms::Algorithm, error::Error, hashing::*, options::Options};

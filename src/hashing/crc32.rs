@@ -14,7 +14,7 @@
  */
 
 hash_func!(
-    crc32fast::Hasher::new(),
-    |crc: &mut crc32fast::Hasher, buffer: &[u8]| crc.update(buffer),
-    |crc: crc32fast::Hasher| format!("{:08X}", (&crc.finalize()))
+	crc32fast::Hasher::new(),
+	|crc: &mut crc32fast::Hasher, buffer: &[u8]| crc.update(buffer),
+	|crc: crc32fast::Hasher| format!("{:08X}", (&crc.finalize()))
 );

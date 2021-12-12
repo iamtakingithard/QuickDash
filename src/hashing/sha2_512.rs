@@ -13,11 +13,12 @@
  * limitations under the License.
  */
 
-use crate::hash_string;
 use sha2::{Digest, Sha512};
 
+use crate::hash_string;
+
 hash_func!(
-    Sha512::new(),
-    |sha512: &mut Sha512, buffer: &[u8]| sha512.update(buffer),
-    |sha512: Sha512| { hash_string(&sha512.finalize()) }
+	Sha512::new(),
+	|sha512: &mut Sha512, buffer: &[u8]| sha512.update(buffer),
+	|sha512: Sha512| { hash_string(&sha512.finalize()) }
 );

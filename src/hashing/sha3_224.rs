@@ -13,11 +13,12 @@
  * limitations under the License.
  */
 
-use crate::hash_string;
 use sha3::{Digest, Sha3_224};
 
+use crate::hash_string;
+
 hash_func!(
-    Sha3_224::new(),
-    |sha3224: &mut Sha3_224, buffer: &[u8]| sha3224.update(buffer),
-    |sha3224: Sha3_224| hash_string(&sha3224.finalize())
+	Sha3_224::new(),
+	|sha3224: &mut Sha3_224, buffer: &[u8]| sha3224.update(buffer),
+	|sha3224: Sha3_224| hash_string(&sha3224.finalize())
 );

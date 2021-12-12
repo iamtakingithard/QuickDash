@@ -13,11 +13,12 @@
  * limitations under the License.
  */
 
+use blake2::{Blake2s256, Digest};
+
 use crate::hash_string;
-use blake2::{Blake2s, Digest};
 
 hash_func!(
-    Blake2s::new(),
-    |blake: &mut Blake2s, buffer: &[u8]| blake.update(buffer),
-    |blake: Blake2s| { hash_string(&blake.finalize()) }
+	Blake2s256::new(),
+	|blake: &mut Blake2s256, buffer: &[u8]| blake.update(buffer),
+	|blake: Blake2s256| { hash_string(&blake.finalize()) }
 );

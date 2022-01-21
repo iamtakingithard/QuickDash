@@ -28,13 +28,13 @@ mod write;
 use std::{
 	collections::{BTreeMap, BTreeSet},
 	fs::File,
-	io::{self, BufRead, BufReader, Write},
+	io::{BufRead, BufReader, Write},
 	path::{Path, PathBuf},
 };
 
-use futures::{executor, future, task::SpawnExt};
 use once_cell::sync::Lazy;
 use pbr::ProgressBar;
+use rayon::{prelude::*, ThreadPoolBuilder};
 use regex::Regex;
 use tabwriter::TabWriter;
 use walkdir::WalkDir;
@@ -43,8 +43,7 @@ pub use self::{compare::*, write::*};
 use crate::{
 	hash_file,
 	utilities::{mul_str, relative_name},
-	Algorithm,
-	Error,
+	Algorithm, Error,
 };
 
 /// Create subpath->hash mappings for a given path using a given algorithm up to
@@ -63,57 +62,44 @@ pub fn create_hashes<Wo: Write>(
 		walkdir = walkdir.max_depth(depth + 1);
 	}
 
+	ThreadPoolBuilder::new()
+		.num_threads(jobs)
+		.build_global()
+		.unwrap();
+
 	let mut hashes = BTreeMap::new();
-	let mut hashes_f: BTreeMap<String, String> = BTreeMap::new();
-	let pool = executor::ThreadPoolBuilder::new()
-		.pool_size(jobs)
-		.create()
-		.expect("could not create ThreadPool");
 
-	let mut walkdir = walkdir.into_iter();
-	while let Some(entry) = walkdir.next() {
-		match entry {
-			Ok(entry) => {
-				let file_type = entry.file_type();
-				let filename = relative_name(path, entry.path());
-				let ignored = ignored_files.contains(&filename);
-
-				if file_type.is_file() {
-					if ignored {
-						hashes.insert(mul_str("-", algo.hexlen()), filename);
-					} else {
-						let ready = future::ready(hash_file(algo, entry.path()));
-						let future = pool.spawn_with_handle(ready).expect("failed to spawn");
-						hashes_f.insert(filename, executor::block_on(future));
-					}
-				} else if ignored {
-					walkdir.skip_current_dir();
+	let files: Vec<_> = walkdir
+		.into_iter()
+		.filter_entry(|e: &walkdir::DirEntry| {
+			let filename = relative_name(path, e.path());
+			match (ignored_files.contains(&filename), e.file_type().is_file()) {
+				(true, true) => {
+					hashes.insert(mul_str("-", algo.hexlen()), filename);
+					false
 				}
+				(true, false) => false,
+				_ => true,
 			}
-			Err(error) => {
-				let err = format!(
-					"Symlink loop detected at {}",
-					relative_name(path, error.path().unwrap())
-				);
-				writeln!(io::stderr(), "{}", err).expect("io err");
-			}
-		}
-	}
+		})
+		.flatten()
+		.filter(|e| e.file_type().is_file())
+		.collect();
 
-	let mut pb = ProgressBar::on(pb_out, hashes_f.len() as u64);
+	let mut pb = ProgressBar::on(pb_out, files.len() as u64);
 	pb.set_width(Some(80));
 	pb.show_speed = false;
 	pb.show_tick = true;
 
-	hashes.extend(hashes_f.into_iter().map(|(k, f)| {
-		pb.message(&format!("{} ", k));
-		pb.inc();
-		(k, f)
-	}));
-
-	pb.show_tick = false;
-	pb.tick();
-	pb.finish();
+	let mut result: BTreeMap<String, String> = files
+		.par_iter()
+		.map(|e| {
+			let value = hash_file(algo, e.path());
+			let filename = relative_name(path, e.path());
+			(filename, value)
+		})
+		.collect();
+	hashes.append(&mut result);
 	hashes
 }
 

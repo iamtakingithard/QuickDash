@@ -87,7 +87,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --all-features --release --locked --target=${{ matrix.target }} 
+          args: --all-features --release --target=${{ matrix.target }} 
           use-cross: ${{ matrix.cross }}
 
       - name: Compress binaries

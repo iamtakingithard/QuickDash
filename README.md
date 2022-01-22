@@ -1,7 +1,7 @@
 ![The origins](https://raw.githubusercontent.com/AndreVuillemot160/QuickDash/main/1620228832249.jpg)
 
 
-# QuickDash [![Rust](https://github.com/AndreVuillemot160/QuickDash/actions/workflows/rust.yml/badge.svg)](https://github.com/AndreVuillemot160/QuickDash/actions/workflows/rust.yml) [![](https://meritbadge.herokuapp.com/quickdash)](https://crates.io/crates/quickdash) [![codecov](https://codecov.io/gh/AndreVuillemot160/QuickDash/branch/main/graph/badge.svg?token=YA4NPM8NPJ)](https://codecov.io/gh/AndreVuillemot160/QuickDash) [![Bors enabled](https://bors.tech/images/badge_small.svg)](https://app.bors.tech/repositories/34705)
+# QuickDash [![Rust](https://github.com/AndreVuillemot160/QuickDash/actions/workflows/rust.yml/badge.svg)](https://github.com/AndreVuillemot160/QuickDash/actions/workflows/rust.yml) [![](https://meritbadge.herokuapp.com/quickdash)](https://crates.io/crates/quickdash) [![codecov](https://codecov.io/gh/AndreVuillemot160/QuickDash/branch/main/graph/badge.svg?token=YA4NPM8NPJ)](https://codecov.io/gh/AndreVuillemot160/QuickDash)
 A modern alternative to QuickSFV using Rust. It's supports BLAKE3 and BLAKE2 hashes, CRC32, MD5, SHA1, SHA2, SHA3, xxHash
 
 Mirror: https://git.envs.net/Adrec/QuickDash
@@ -9,7 +9,7 @@ Mirror: https://git.envs.net/Adrec/QuickDash
 Note: the old name `quick_dash` is no longer in use, if anyone wants it feel free to take it on crates.io
 
 ## Benchmarks
-Benchmarks were performed under Windows 10 with Ryzen 5 1600 with batch scripts that are in project.
+Benchmarks were performed under Windows 10 with Ryzen 5 1600.
 For benchmarking the program [`hyperfine`](https://github.com/sharkdp/hyperfine) was used.
 It was checking the hashed the source code of the QuickDash.
 

@@ -22,12 +22,12 @@ use std::str::FromStr;
 /// ```
 /// # use std::str::FromStr;
 /// assert_eq!(
-/// 	quickdash::Algorithm::from_str("BLAKE3"),
-/// 	Ok(quickdash::Algorithm::BLAKE3)
+///     quickdash::Algorithm::from_str("BLAKE3"),
+///     Ok(quickdash::Algorithm::BLAKE3)
 /// );
 /// assert_eq!(
-/// 	quickdash::Algorithm::from_str("MD5"),
-/// 	Ok(quickdash::Algorithm::MD5)
+///     quickdash::Algorithm::from_str("MD5"),
+///     Ok(quickdash::Algorithm::MD5)
 /// );
 /// ```
 

@@ -33,7 +33,6 @@ fn actual_main() -> i32 {
 		opts.depth,
 		opts.follow_symlinks,
 		opts.jobs,
-		stdout(),
 	);
 	if opts.verify {
 		// Progress bar separator

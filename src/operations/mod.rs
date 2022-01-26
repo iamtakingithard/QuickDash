@@ -32,9 +32,11 @@ use std::{
 	path::{Path, PathBuf},
 };
 
+use indicatif::{ParallelProgressIterator, ProgressBar, ProgressStyle};
 use once_cell::sync::Lazy;
-use pbr::ProgressBar;
-use rayon::{prelude::*, ThreadPoolBuilder};
+use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
+use rayon::ThreadPoolBuilder;
+
 use regex::Regex;
 use tabwriter::TabWriter;
 use walkdir::{DirEntry, WalkDir};
@@ -46,21 +48,42 @@ use crate::{
 	Algorithm, Error,
 };
 
+static SPINNER_STRINGS: [&str; 12] = [
+	" 🧑⚽️       🧑 ",
+	"🧑  ⚽️      🧑 ",
+	"🧑   ⚽️     🧑 ",
+	"🧑    ⚽️    🧑 ",
+	"🧑     ⚽️   🧑 ",
+	"🧑      ⚽️  🧑 ",
+	"🧑       ⚽️🧑  ",
+	"🧑      ⚽️  🧑 ",
+	"🧑     ⚽️   🧑 ",
+	"🧑    ⚽️    🧑 ",
+	"🧑   ⚽️     🧑 ",
+	"🧑  ⚽️      🧑 ",
+];
+
 /// Create subpath->hash mappings for a given path using a given algorithm up to
 /// a given depth.
-pub fn create_hashes<Wo: Write>(
+pub fn create_hashes(
 	path: &Path,
 	ignored_files: BTreeSet<String>,
 	algo: Algorithm,
 	depth: Option<usize>,
 	follow_symlinks: bool,
 	jobs: usize,
-	pb_out: Wo,
 ) -> BTreeMap<String, String> {
 	let mut walkdir = WalkDir::new(path).follow_links(follow_symlinks);
 	if let Some(depth) = depth {
 		walkdir = walkdir.max_depth(depth + 1);
 	}
+
+	let pb_style = ProgressStyle::default_bar()
+		.template("{prefix:.bold.dim} {spinner} {wide_bar} {pos:>7}/{len:7} ETA: {eta} - {msg}")
+		.tick_strings(&SPINNER_STRINGS);
+
+	let pb = ProgressBar::new_spinner();
+	pb.set_style(pb_style);
 
 	ThreadPoolBuilder::new()
 		.num_threads(jobs)
@@ -69,6 +92,8 @@ pub fn create_hashes<Wo: Write>(
 
 	let mut hashes = BTreeMap::new();
 
+	pb.enable_steady_tick(80);
+	pb.set_message("Finding files to hash...");
 	let mut files: Vec<DirEntry> = walkdir
 		.into_iter()
 		.filter_entry(|e: &walkdir::DirEntry| {
@@ -88,13 +113,13 @@ pub fn create_hashes<Wo: Write>(
 
 	optimize_file_order(&mut files);
 
-	let mut pb = ProgressBar::on(pb_out, files.len() as u64);
-	pb.set_width(Some(80));
-	pb.show_speed = false;
-	pb.show_tick = true;
+	pb.reset();
+	pb.set_length(files.len() as u64);
+	pb.set_message("Hashing files...");
 
 	let mut result: BTreeMap<String, String> = files
 		.par_iter()
+		.progress_with(pb)
 		.map(|e| {
 			let value = hash_file(algo, e.path());
 			let filename = relative_name(path, e.path());

@@ -38,8 +38,8 @@ pub fn vec_merge<T>(mut lhs: Vec<T>, rhs: Vec<T>) -> Vec<T> {
 ///
 /// ```
 /// assert_eq!(
-/// 	quickdash::utilities::mul_str("LOL! ", 3),
-/// 	"LOL! LOL! LOL! ".to_string()
+///   quickdash::utilities::mul_str("LOL! ", 3),
+///   "LOL! LOL! LOL! ".to_string()
 /// );
 /// ```
 pub fn mul_str(what: &str, n: usize) -> String {
@@ -53,8 +53,8 @@ pub fn mul_str(what: &str, n: usize) -> String {
 /// ```
 /// # use std::path::Path;
 /// assert_eq!(
-/// 	quickdash::utilities::relative_name(Path::new("/usr"), Path::new("/usr/bin/quickdash")),
-/// 	"bin/quickdash".to_string()
+///   quickdash::utilities::relative_name(Path::new("/usr"), Path::new("/usr/bin/quickdash")),
+///   "bin/quickdash".to_string()
 /// );
 /// ```
 pub fn relative_name(prefix: &Path, what: &Path) -> String {

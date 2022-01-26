@@ -37,7 +37,7 @@ use pbr::ProgressBar;
 use rayon::{prelude::*, ThreadPoolBuilder};
 use regex::Regex;
 use tabwriter::TabWriter;
-use walkdir::WalkDir;
+use walkdir::{DirEntry, WalkDir};
 
 pub use self::{compare::*, write::*};
 use crate::{
@@ -69,7 +69,7 @@ pub fn create_hashes<Wo: Write>(
 
 	let mut hashes = BTreeMap::new();
 
-	let files: Vec<_> = walkdir
+	let mut files: Vec<DirEntry> = walkdir
 		.into_iter()
 		.filter_entry(|e: &walkdir::DirEntry| {
 			let filename = relative_name(path, e.path());
@@ -86,6 +86,8 @@ pub fn create_hashes<Wo: Write>(
 		.filter(|e| e.file_type().is_file())
 		.collect();
 
+	optimize_file_order(&mut files);
+
 	let mut pb = ProgressBar::on(pb_out, files.len() as u64);
 	pb.set_width(Some(80));
 	pb.show_speed = false;
@@ -101,6 +103,23 @@ pub fn create_hashes<Wo: Write>(
 		.collect();
 	hashes.append(&mut result);
 	hashes
+}
+
+#[cfg(target_os = "linux")]
+fn optimize_file_order(dirs: &mut Vec<DirEntry>) {
+	// TODO: figure out fiemap
+
+	use walkdir::DirEntryExt;
+	dirs.sort_by(|a, b| {
+		let a_inode = a.ino();
+		let b_inode = b.ino();
+		a_inode.cmp(&b_inode)
+	});
+}
+
+#[cfg(not(target_os = "linux"))]
+fn optimize_file_order(dirs: &mut Vec<DirEntry>) {
+	dirs;
 }
 
 /// Serialise the specified hashes to the specified output file.

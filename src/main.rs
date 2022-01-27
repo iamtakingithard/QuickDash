@@ -15,8 +15,29 @@
 
 use std::{
 	io::{stderr, stdout},
+	path::{Path, PathBuf},
 	process::exit,
 };
+
+use clap::Parser;
+use quickdash::{Commands, Mode};
+
+const BANNER: [&str; 13] = [
+	"",
+	// PS I know it's kinda awful and all. But still cool.
+	"  █████   █    ██  ██▓ ▄████▄   ██ ▄█▀▓█████▄  ▄▄▄        ██████  ██░ ██ ",
+	"▒██▓  ██▒ ██  ▓██▒▓██▒▒██▀ ▀█   ██▄█▒ ▒██▀ ██▌▒████▄    ▒██    ▒ ▓██░ ██▒",
+	"▒██▒  ██░▓██  ▒██░▒██▒▒▓█    ▄ ▓███▄░ ░██   █▌▒██  ▀█▄  ░ ▓██▄   ▒██▀▀██░",
+	"░██  █▀ ░▓▓█  ░██░░██░▒▓▓▄ ▄██▒▓██ █▄ ░▓█▄   ▌░██▄▄▄▄██   ▒   ██▒░▓█ ░██ ",
+	"░▒███▒█▄ ▒▒█████▓ ░██░▒ ▓███▀ ░▒██▒ █▄░▒████▓  ▓█   ▓██▒▒██████▒▒░▓█▒░██▓",
+	"░░ ▒▒░ ▒ ░▒▓▒ ▒ ▒ ░▓  ░ ░▒ ▒  ░▒ ▒▒ ▓▒ ▒▒▓  ▒  ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒",
+	" ░ ▒░  ░ ░░▒░ ░ ░  ▒ ░  ░  ▒   ░ ░▒ ▒░ ░ ▒  ▒   ▒   ▒▒ ░░ ░▒  ░ ░ ▒ ░▒░ ░",
+	"   ░   ░  ░░░ ░ ░  ▒ ░░        ░ ░░ ░  ░ ░  ░   ░   ▒   ░  ░  ░   ░  ░░ ░",
+	"     ░       ░      ░  ░ ░      ░  ░      ░          ░  ░      ░   ░  ░  ░",
+	"",
+	"Made with <3  by Cerda. Repo: https://github.com/AndreVuillemot160/QuickDash/",
+	"",
+];
 
 fn main() {
 	let result = actual_main();
@@ -24,48 +45,59 @@ fn main() {
 }
 
 fn actual_main() -> i32 {
-	let opts = quickdash::Options::parse();
+	let opts = Commands::parse();
 
-	let hashes = quickdash::operations::create_hashes(
-		&opts.dir,
-		opts.ignored_files,
-		opts.algorithm,
-		opts.depth,
-		opts.follow_symlinks,
-		opts.jobs,
-	);
-	if opts.verify {
-		// Progress bar separator
-		println!();
-		// PS I know it's kinda awful and all. But still cool.
-		println!("  █████   █    ██  ██▓ ▄████▄   ██ ▄█▀▓█████▄  ▄▄▄        ██████  ██░ ██ ");
-		println!("▒██▓  ██▒ ██  ▓██▒▓██▒▒██▀ ▀█   ██▄█▒ ▒██▀ ██▌▒████▄    ▒██    ▒ ▓██░ ██▒");
-		println!("▒██▒  ██░▓██  ▒██░▒██▒▒▓█    ▄ ▓███▄░ ░██   █▌▒██  ▀█▄  ░ ▓██▄   ▒██▀▀██░");
-		println!("░██  █▀ ░▓▓█  ░██░░██░▒▓▓▄ ▄██▒▓██ █▄ ░▓█▄   ▌░██▄▄▄▄██   ▒   ██▒░▓█ ░██ ");
-		println!("░▒███▒█▄ ▒▒█████▓ ░██░▒ ▓███▀ ░▒██▒ █▄░▒████▓  ▓█   ▓██▒▒██████▒▒░▓█▒░██▓");
-		println!("░░ ▒▒░ ▒ ░▒▓▒ ▒ ▒ ░▓  ░ ░▒ ▒  ░▒ ▒▒ ▓▒ ▒▒▓  ▒  ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒");
-		println!(" ░ ▒░  ░ ░░▒░ ░ ░  ▒ ░  ░  ▒   ░ ░▒ ▒░ ░ ▒  ▒   ▒   ▒▒ ░░ ░▒  ░ ░ ▒ ░▒░ ░");
-		println!("   ░   ░  ░░░ ░ ░  ▒ ░░        ░ ░░ ░  ░ ░  ░   ░   ▒   ░  ░  ░   ░  ░░ ░");
-		println!("     ░       ░      ░  ░ ░      ░  ░      ░          ░  ░      ░   ░  ░  ░");
-		println!();
-		println!("Made with <3 by Cerda. Repo: https://github.com/AndreVuillemot160/QuickDash/");
-		println!();
+	BANNER.iter().for_each(|line| println!("{}", line));
 
-		match quickdash::operations::read_hashes(&opts.file) {
-			Ok(loaded_hashes) => {
-				let compare_result =
-					quickdash::operations::compare_hashes(&opts.file.0, hashes, loaded_hashes);
-				quickdash::operations::write_hash_comparison_results(
-					&mut stdout(),
-					&mut stderr(),
-					compare_result,
-				)
+	match opts.command {
+		Mode::Create { path, file, force } => {
+			let file = file.unwrap_or(default_file(&path));
+			match (force, Path::new(&file).exists()) {
+				(true, _) | (_, false) => {
+					let hashes = quickdash::operations::create_hashes(
+						&path,
+						opts.ignored_files,
+						opts.algorithm,
+						opts.depth,
+						opts.follow_symlinks,
+						opts.jobs,
+					);
+					quickdash::operations::write_hashes(&file, opts.algorithm, hashes)
+				}
+				(false, true) => {
+					eprintln!("File already exists. Use --force to overwrite.");
+					return 1;
+				}
 			}
-			Err(rval) => rval,
 		}
-		.exit_value()
-	} else {
-		quickdash::operations::write_hashes(&opts.file, opts.algorithm, hashes);
-		0
+		Mode::Verify { path, file } => {
+			let hashes = quickdash::operations::create_hashes(
+				&path,
+				opts.ignored_files,
+				opts.algorithm,
+				opts.depth,
+				opts.follow_symlinks,
+				opts.jobs,
+			);
+			let file = file.unwrap_or(default_file(&path));
+			match quickdash::operations::read_hashes(&file) {
+				Ok(loaded_hashes) => {
+					let compare_result =
+						quickdash::operations::compare_hashes(&file, hashes, loaded_hashes);
+					quickdash::operations::write_hash_comparison_results(
+						&mut stdout(),
+						&mut stderr(),
+						compare_result,
+					)
+				}
+				Err(rval) => rval,
+			}
+			.exit_value()
+		}
 	}
+}
+
+fn default_file(path: &Path) -> PathBuf {
+	let parent = path.file_stem().expect("Could not get directory name");
+	path.join(parent).with_extension("hash")
 }

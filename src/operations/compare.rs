@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-use std::collections::BTreeMap;
+use std::{collections::BTreeMap, path::PathBuf};
 
 use crate::utilities::{mul_str, vec_merge};
 
@@ -44,7 +44,7 @@ pub enum CompareError {
 
 /// Compare two provided hashes
 pub fn compare_hashes(
-	out_file: &str,
+	out_file: &PathBuf,
 	mut current_hashes: BTreeMap<String, String>,
 	mut loaded_hashes: BTreeMap<String, String>,
 ) -> Result<(Vec<CompareResult>, Vec<CompareFileResult>), CompareError> {
@@ -59,8 +59,9 @@ pub fn compare_hashes(
 	let placeholder_value = mul_str("-", current_hashes_value_len);
 	let mut file_compare_results = Vec::new();
 
-	current_hashes.remove(out_file);
-	loaded_hashes.remove(out_file);
+	let key = out_file.to_string_lossy().to_string();
+	current_hashes.remove(&key);
+	loaded_hashes.remove(&key);
 
 	let remove_results = process_ignores(
 		|key, _, other| !other.contains_key(key),

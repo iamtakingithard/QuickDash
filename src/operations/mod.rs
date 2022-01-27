@@ -26,7 +26,7 @@ mod compare;
 mod write;
 
 use std::{
-	collections::{BTreeMap, BTreeSet},
+	collections::BTreeMap,
 	fs::File,
 	io::{BufRead, BufReader, Write},
 	path::{Path, PathBuf},
@@ -48,26 +48,13 @@ use crate::{
 	Algorithm, Error,
 };
 
-static SPINNER_STRINGS: [&str; 12] = [
-	" 🧑⚽️       🧑 ",
-	"🧑  ⚽️      🧑 ",
-	"🧑   ⚽️     🧑 ",
-	"🧑    ⚽️    🧑 ",
-	"🧑     ⚽️   🧑 ",
-	"🧑      ⚽️  🧑 ",
-	"🧑       ⚽️🧑  ",
-	"🧑      ⚽️  🧑 ",
-	"🧑     ⚽️   🧑 ",
-	"🧑    ⚽️    🧑 ",
-	"🧑   ⚽️     🧑 ",
-	"🧑  ⚽️      🧑 ",
-];
+static SPINNER_STRINGS: [&str; 10] = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
 
 /// Create subpath->hash mappings for a given path using a given algorithm up to
 /// a given depth.
 pub fn create_hashes(
 	path: &Path,
-	ignored_files: BTreeSet<String>,
+	ignored_files: Vec<String>,
 	algo: Algorithm,
 	depth: Option<usize>,
 	follow_symlinks: bool,
@@ -149,26 +136,31 @@ fn optimize_file_order(dirs: &mut Vec<DirEntry>) {
 
 /// Serialise the specified hashes to the specified output file.
 pub fn write_hashes(
-	out_file: &(String, PathBuf),
+	out_file: &PathBuf,
 	algo: Algorithm,
 	mut hashes: BTreeMap<String, String>,
-) {
-	let mut out = TabWriter::new(File::create(&out_file.1).unwrap());
+) -> i32 {
+	let file = File::create(&out_file).unwrap();
+	let mut out = TabWriter::new(file);
 
-	hashes.insert(out_file.0.clone(), mul_str("-", algo.hexlen()));
+	hashes.insert(
+		out_file.to_string_lossy().to_string(),
+		mul_str("-", algo.hexlen()),
+	);
 	for (fname, hash) in hashes {
 		writeln!(&mut out, "{}  {}", hash, fname).unwrap();
 	}
 
-	out.flush().unwrap();
+	out.flush().expect("Failed to flush output file");
+	0
 }
 
 /// Read uppercased hashes with `write_hashes()` from the specified path or fail
 /// with line numbers not matching pattern.
-pub fn read_hashes(file: &(String, PathBuf)) -> Result<BTreeMap<String, String>, Error> {
+pub fn read_hashes(file: &PathBuf) -> Result<BTreeMap<String, String>, Error> {
 	let mut hashes = BTreeMap::new();
 
-	let in_file = BufReader::new(File::open(&file.1).unwrap());
+	let in_file = BufReader::new(File::open(&file).unwrap());
 	for line in in_file.lines().map(Result::unwrap) {
 		try_contains(&line, &mut hashes)?;
 	}

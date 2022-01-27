@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-use std::{collections::BTreeMap, path::PathBuf};
+use std::{collections::BTreeMap, path::Path};
 
 use crate::utilities::{mul_str, vec_merge};
 
@@ -44,7 +44,7 @@ pub enum CompareError {
 
 /// Compare two provided hashes
 pub fn compare_hashes(
-	out_file: &PathBuf,
+	out_file: &Path,
 	mut current_hashes: BTreeMap<String, String>,
 	mut loaded_hashes: BTreeMap<String, String>,
 ) -> Result<(Vec<CompareResult>, Vec<CompareFileResult>), CompareError> {

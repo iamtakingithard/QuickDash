@@ -211,4 +211,6 @@ mod options;
 pub mod operations;
 pub mod utilities;
 
-pub use crate::{algorithms::Algorithm, error::Error, hashing::*, options::Options};
+pub use crate::{
+	algorithms::Algorithm, error::Error, hashing::*, options::Commands, options::Mode,
+};

@@ -6,7 +6,7 @@ readme = "README.md"
 keywords = ["cli", "hash", "verify"]
 categories = ["authentication", "filesystem", "command-line-utilities"]
 license = "Apache-2.0"
-version = "0.5.8"
+version = "0.6.0"
 authors = ["cerda <cerdamods@protonmail.com", "b1tzxd"]
 edition = "2021"
 
@@ -18,7 +18,7 @@ indicatif = { version = "0.16", features = ["rayon"] }
 rayon = "1.5"
 walkdir = "2.3.2"
 regex = "1.5.4"
-clap = "2.34.0"
+clap = { version = "3", features = ["derive"] }
 crc32fast = "1.2.2"
 blake2 = "0.10.0"
 md-5 = "0.10.0"

@@ -29,7 +29,7 @@ use std::{
 	collections::BTreeMap,
 	fs::File,
 	io::{BufRead, BufReader, Write},
-	path::{Path, PathBuf},
+	path::Path,
 };
 
 use indicatif::{ParallelProgressIterator, ProgressBar, ProgressStyle};
@@ -130,16 +130,10 @@ fn optimize_file_order(dirs: &mut Vec<DirEntry>) {
 }
 
 #[cfg(not(target_os = "linux"))]
-fn optimize_file_order(dirs: &mut Vec<DirEntry>) {
-	dirs;
-}
+fn optimize_file_order(_dirs: &mut Vec<DirEntry>) {}
 
 /// Serialise the specified hashes to the specified output file.
-pub fn write_hashes(
-	out_file: &PathBuf,
-	algo: Algorithm,
-	mut hashes: BTreeMap<String, String>,
-) -> i32 {
+pub fn write_hashes(out_file: &Path, algo: Algorithm, mut hashes: BTreeMap<String, String>) -> i32 {
 	let file = File::create(&out_file).unwrap();
 	let mut out = TabWriter::new(file);
 
@@ -157,7 +151,7 @@ pub fn write_hashes(
 
 /// Read uppercased hashes with `write_hashes()` from the specified path or fail
 /// with line numbers not matching pattern.
-pub fn read_hashes(file: &PathBuf) -> Result<BTreeMap<String, String>, Error> {
+pub fn read_hashes(file: &Path) -> Result<BTreeMap<String, String>, Error> {
 	let mut hashes = BTreeMap::new();
 
 	let in_file = BufReader::new(File::open(&file).unwrap());

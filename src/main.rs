@@ -51,7 +51,7 @@ fn actual_main() -> i32 {
 
 	match opts.command {
 		Mode::Create { path, file, force } => {
-			let file = file.unwrap_or(default_file(&path));
+			let file = file.unwrap_or_else(|| default_file(&path));
 			match (force, Path::new(&file).exists()) {
 				(true, _) | (_, false) => {
 					let hashes = quickdash::operations::create_hashes(
@@ -66,7 +66,7 @@ fn actual_main() -> i32 {
 				}
 				(false, true) => {
 					eprintln!("File already exists. Use --force to overwrite.");
-					return 1;
+					1
 				}
 			}
 		}
@@ -79,7 +79,7 @@ fn actual_main() -> i32 {
 				opts.follow_symlinks,
 				opts.jobs,
 			);
-			let file = file.unwrap_or(default_file(&path));
+			let file = file.unwrap_or_else(|| default_file(&path));
 			match quickdash::operations::read_hashes(&file) {
 				Ok(loaded_hashes) => {
 					let compare_result =

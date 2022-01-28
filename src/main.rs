@@ -14,6 +14,7 @@
  */
 
 use std::{
+	fs::remove_file,
 	io::{stderr, stdout},
 	path::{Path, PathBuf},
 	process::exit,
@@ -54,6 +55,9 @@ fn actual_main() -> i32 {
 			let file = file.unwrap_or_else(|| default_file(&path));
 			match (force, Path::new(&file).exists()) {
 				(true, _) | (_, false) => {
+					// if this fails, it probably didn't exist
+					let _ = remove_file(&file);
+
 					let hashes = quickdash::operations::create_hashes(
 						&path,
 						opts.ignored_files,

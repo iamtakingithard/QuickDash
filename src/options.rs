@@ -67,8 +67,3 @@ pub enum Mode {
 		file: Option<PathBuf>,
 	},
 }
-
-/// Representation of the application's all configurable values.
-#[derive(Parser)]
-#[clap(author, version, about, long_about = None)]
-pub struct Options {}

@@ -1,31 +1,71 @@
 ```
-QuickDash 0.5.0
+QuickDash 0.6.0
 A modern alternative to QuickSFV using Rust. Made with <3 by Cerda.
 
 USAGE:
-    quickdash [FLAGS] [OPTIONS] [--] [DIRECTORY]
-
-FLAGS:
-    -c, --create                Make hashes
-        --follow-symlinks       Recurse down symlinks. Default: yes
-        --force                 Override output file
-    -h, --help                  Prints help information
-        --no-follow-symlinks    Don't recurse down symlinks
-    -r, --recursive             Infinite recursion depth.
-    -V, --version               Prints version information
-    -v, --verify                Verify hashes (default)
+    quickdash [OPTIONS] <SUBCOMMAND>
 
 OPTIONS:
-    -a, --algorithm <algorithm>
-            Hashing algorithm to use.
-            Supported algorithms: SHA{1,2-,3-{224,256,384,512}, CRC32, MD5, BLAKE{2B,2S,3}, XXHASH{3,64} [default:
-            BLAKE3]
-    -d, --depth <depth>            Max recursion depth. `-1` for infinite.'. Default: don't recurs
-    -f, --file <file>              File with hashes to be read/created
-    -i, --ignore <file>...         Ignore specified file(s)
-    -j, --jobs <jobs>              # of threads used for hashing. No/empty value: # of CPU threads. value = 0: maximum
-                                   of u8 (255)
+    -a, --algorithm <ALGORITHM>
+            Hashing algorithm to use
+            
+            [default: blake3]
+            [possible values: sha1, sha2224, sha2256, sha2384, sha2512, sha3224, sha3256, sha3384,
+            sha3512, xxh32, xxh64, xxh3, crc32, md5, whirl-pool, blake2b, blake2s, blake3]
+
+    -d, --depth <DEPTH>
+            Max recursion depth. Infinite if None. Default: `0`
+
+        --follow-symlinks
+            Whether to recurse down symlinks. Default: `true`
+
+    -h, --help
+            Print help information
+
+    -i, --ignored-files <IGNORED_FILES>
+            Files/directories to ignore. Default: none
+
+    -j, --jobs <JOBS>
+            # of threads used for hashing
+            
+            [default: 0]
+
+    -V, --version
+            Print version information
+
+SUBCOMMANDS:
+    create
+            
+    help
+            Print this message or the help of the given subcommand(s)
+    verify
+```
+
+```
+quickdash-create 
+
+USAGE:
+    quickdash create [OPTIONS] [PATH]
 
 ARGS:
-    <DIRECTORY>    Directory to hash/verify [default: .]
+    <PATH>    Directory to hash. Default: current directory [default: .]
+
+OPTIONS:
+    -f, --force          
+        --file <FILE>    Output filename. Default: `directory_name.hash"`
+    -h, --help           Print help information
+```
+
+```
+quickdash-verify 
+
+USAGE:
+    quickdash verify [OPTIONS] [PATH]
+
+ARGS:
+    <PATH>    Directory to verify. Default: current directory [default: .]
+
+OPTIONS:
+        --file <FILE>    Input filename. Default: `directory_name.hash"`
+    -h, --help           Print help information
 ```

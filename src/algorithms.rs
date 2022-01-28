@@ -15,6 +15,8 @@
 
 use std::str::FromStr;
 
+use clap::ArgEnum;
+
 /// A hashing algorithm.
 ///
 /// # Examples
@@ -31,7 +33,7 @@ use std::str::FromStr;
 /// );
 /// ```
 
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, ArgEnum)]
 pub enum Algorithm {
 	SHA1,
 	SHA2224,

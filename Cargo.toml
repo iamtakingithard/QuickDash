@@ -1,13 +1,13 @@
 [package]
 name = "quickdash"
-description = "A modern alternative to QuickSFV, written on Rust."
+description = "A modern alternative to QuickSFV using Rust."
 repository = "https://github.com/AndreVuillemot/QuickDash"
 readme = "README.md"
 keywords = ["cli", "hash", "verify"]
 categories = ["authentication", "filesystem", "command-line-utilities"]
 license = "Apache-2.0"
 version = "0.6.0"
-authors = ["cerda <cerdamods@protonmail.com", "b1tzxd"]
+authors = ["Cerda <cerdamods@protonmail.com", "b1tzxd", "mjc"]
 edition = "2021"
 
 [dependencies]

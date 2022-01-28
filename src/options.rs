@@ -19,10 +19,15 @@ use crate::Algorithm;
 use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
-#[clap(author, version, about, long_about = None)]
+#[clap(
+	name = "QuickDash",
+	version,
+	about,
+	long_about = "A modern alternative to QuickSFV using Rust. Made with <3 by Cerda."
+)]
 pub struct Commands {
-	/// Hashing algorithm to use. Default: `"BLAKE3"`
-	#[clap(short, long, default_value = "BLAKE3")]
+	/// Hashing algorithm to use.
+	#[clap(arg_enum, short, long, default_value = "blake3")]
 	pub algorithm: Algorithm,
 	/// Max recursion depth. Infinite if None. Default: `0`
 	#[clap(short, long)]

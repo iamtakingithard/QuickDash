@@ -77,7 +77,7 @@ impl FromStr for Algorithm {
 	type Err = String;
 
 	fn from_str(s: &str) -> Result<Self, Self::Err> {
-		match &s.replace("_", "-").to_lowercase()[..] {
+		match &s.replace('_', "-").to_lowercase()[..] {
 			"sha-1" | "sha1" => Ok(Algorithm::SHA1),
 			"sha2224" | "sha-224" | "sha-2-224" => Ok(Algorithm::SHA2224),
 			"sha2256" | "sha-256" | "sha-2-256" => Ok(Algorithm::SHA2256),

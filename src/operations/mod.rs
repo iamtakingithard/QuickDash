@@ -34,9 +34,10 @@ use std::{
 
 use indicatif::{ParallelProgressIterator, ProgressBar, ProgressStyle};
 use once_cell::sync::Lazy;
-use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
-use rayon::ThreadPoolBuilder;
-
+use rayon::{
+	iter::{IntoParallelRefIterator, ParallelIterator},
+	ThreadPoolBuilder,
+};
 use regex::Regex;
 use tabwriter::TabWriter;
 use walkdir::{DirEntry, WalkDir};
@@ -45,7 +46,8 @@ pub use self::{compare::*, write::*};
 use crate::{
 	hash_file,
 	utilities::{mul_str, relative_name},
-	Algorithm, Error,
+	Algorithm,
+	Error,
 };
 
 static SPINNER_STRINGS: [&str; 10] = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
@@ -119,8 +121,6 @@ pub fn create_hashes(
 
 #[cfg(target_os = "linux")]
 fn optimize_file_order(dirs: &mut Vec<DirEntry>) {
-	// TODO: figure out fiemap
-
 	use walkdir::DirEntryExt;
 	dirs.sort_by(|a, b| {
 		let a_inode = a.ino();

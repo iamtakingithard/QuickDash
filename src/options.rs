@@ -15,8 +15,9 @@
 
 use std::path::PathBuf;
 
-use crate::Algorithm;
 use clap::{Parser, Subcommand};
+
+use crate::Algorithm;
 
 #[derive(Parser)]
 #[clap(

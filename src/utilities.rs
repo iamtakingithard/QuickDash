@@ -62,5 +62,5 @@ pub fn relative_name(prefix: &Path, what: &Path) -> String {
 		.unwrap()
 		.to_str()
 		.unwrap()
-		.replace("\\", "/")
+		.replace('\\', "/")
 }

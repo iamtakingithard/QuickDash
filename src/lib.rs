@@ -202,6 +202,7 @@
 	unsafe_code,
 	unused_extern_crates
 )]
+#![allow(clippy::tabs_in_doc_comments)]
 
 mod algorithms;
 mod error;

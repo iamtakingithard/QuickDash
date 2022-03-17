@@ -120,7 +120,7 @@ pub fn create_hashes(
 }
 
 #[cfg(target_os = "linux")]
-fn optimize_file_order(dirs: &mut Vec<DirEntry>) {
+fn optimize_file_order(dirs: &mut [DirEntry]) {
 	use walkdir::DirEntryExt;
 	dirs.sort_by(|a, b| {
 		let a_inode = a.ino();
@@ -130,7 +130,7 @@ fn optimize_file_order(dirs: &mut Vec<DirEntry>) {
 }
 
 #[cfg(not(target_os = "linux"))]
-fn optimize_file_order(_dirs: &mut Vec<DirEntry>) {}
+fn optimize_file_order(_dirs: &mut [DirEntry]) {}
 
 /// Serialise the specified hashes to the specified output file.
 pub fn write_hashes(out_file: &Path, algo: Algorithm, mut hashes: BTreeMap<String, String>) -> i32 {

@@ -7,7 +7,7 @@ keywords = ["cli", "hash", "verify"]
 categories = ["authentication", "filesystem", "command-line-utilities"]
 license = "Apache-2.0"
 version = "0.6.1"
-authors = ["Cerda <cerdamods@protonmail.com", "b1tzxd", "mjc"]
+authors = ["cerda", "b1tzxd", "mjc"]
 edition = "2021"
 
 [dependencies]

@@ -1,45 +1,45 @@
 [package]
 name = "quickdash"
 description = "A modern alternative to QuickSFV using Rust."
-repository = "https://github.com/AndreVuillemot/QuickDash"
+repository = "https://github.com/iamtakingithard/QuickDash"
 readme = "README.md"
 keywords = ["cli", "hash", "verify"]
 categories = ["authentication", "filesystem", "command-line-utilities"]
 license = "Apache-2.0"
 version = "0.6.1"
-authors = ["cerda", "b1tzxd", "mjc"]
-edition = "2021"
+authors = ["cerda", "b1tzxd", "mjc", "taskylizard"]
+edition = "2024"
 
 [dependencies]
-once_cell = "1.10.0"
-tabwriter = "1.2.1"
-num_cpus = "1.13.1"
-indicatif = { version = "0.16.2", features = ["rayon"] }
-rayon = "1.5.1"
-walkdir = "2.3.2"
-regex = "1.5.5"
-clap = { version = "3.1.8", features = ["derive"] }
-crc32fast = "1.3.2"
-blake2 = "0.10.4"
-md-5 = "0.10.1"
-blake3 = "1.3.1"
-sha-1 = "0.10.0"
-sha2 = "0.10.2"
-sha3 = "0.10.1"
-whirlpool = "0.10.1"
-xxhash-rust = { version = "0.8.4", features = ["xxh32", "xxh64", "xxh3"] }
+blake2      = "0.10.4"
+blake3      = "1.3.1"
+clap        = { version = "4.4.10", features = ["derive"] }
+crc32fast   = "1.3.2"
+indicatif   = { version = "0.17.11", features = ["rayon"] }
+md-5        = "0.10.1"
+num_cpus    = "1.13.1"
+once_cell   = "1.10.0"
+rayon       = "1.5.1"
+regex       = "1.5.5"
+sha-1       = "0.10.0"
+sha2        = "0.10.2"
+sha3        = "0.10.1"
+tabwriter   = "1.2.1"
+walkdir     = "2.3.2"
+whirlpool   = "0.10.1"
+xxhash-rust = { version = "0.8.4", features = ["xxh3", "xxh32", "xxh64"] }
 
 [profile.release]
-lto = true
 codegen-units = 1
-debug = false
+debug         = false
+lto           = true
 # panic = 'abort'
 
 [[bin]]
+doc  = false
 name = "quickdash"
 path = "src/main.rs"
 test = false
-doc = false
 
 [lib]
 name = "quickdash"

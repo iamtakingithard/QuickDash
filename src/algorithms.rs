@@ -1,4 +1,4 @@
-/* Copyright [2021] [Cerda]
+/* Copyright [2025] [Cerda]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 
 use std::str::FromStr;
 
-use clap::ArgEnum;
+use clap::ValueEnum;
 
 /// A hashing algorithm.
 ///
@@ -33,7 +33,7 @@ use clap::ArgEnum;
 /// );
 /// ```
 
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, ArgEnum)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
 pub enum Algorithm {
 	SHA1,
 	SHA2224,

@@ -1,4 +1,4 @@
-/* Copyright [2021] [Cerda]
+/* Copyright [2025] [Cerda]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 use std::io::Write;
 
 use super::{CompareError, CompareFileResult, CompareResult};
-use crate::{utilities::mul_str, Error};
+use crate::{Error, utilities::mul_str};
 
 /// Write hash comparison results to the output streams in a human-consumable
 /// format

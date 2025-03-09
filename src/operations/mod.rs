@@ -1,4 +1,4 @@
-/* Copyright [2021] [Cerda]
+/* Copyright [2025] [Cerda]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,13 +30,14 @@ use std::{
 	fs::File,
 	io::{BufRead, BufReader, Write},
 	path::Path,
+	time::Duration,
 };
 
 use indicatif::{ParallelProgressIterator, ProgressBar, ProgressStyle};
 use once_cell::sync::Lazy;
 use rayon::{
-	iter::{IntoParallelRefIterator, ParallelIterator},
 	ThreadPoolBuilder,
+	iter::{IntoParallelRefIterator, ParallelIterator},
 };
 use regex::Regex;
 use tabwriter::TabWriter;
@@ -44,10 +45,8 @@ use walkdir::{DirEntry, WalkDir};
 
 pub use self::{compare::*, write::*};
 use crate::{
-	hash_file,
+	Algorithm, Error, hash_file,
 	utilities::{mul_str, relative_name},
-	Algorithm,
-	Error,
 };
 
 static SPINNER_STRINGS: [&str; 10] = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
@@ -69,6 +68,7 @@ pub fn create_hashes(
 
 	let pb_style = ProgressStyle::default_bar()
 		.template("{prefix:.bold.dim} {spinner} {wide_bar} {pos:>7}/{len:7} ETA: {eta} - {msg}")
+		.unwrap()
 		.tick_strings(&SPINNER_STRINGS);
 
 	let pb = ProgressBar::new_spinner();
@@ -81,7 +81,7 @@ pub fn create_hashes(
 
 	let mut hashes = BTreeMap::new();
 
-	pb.enable_steady_tick(80);
+	pb.enable_steady_tick(Duration::from_millis(80));
 	pb.set_message("Finding files to hash...");
 	let mut files: Vec<DirEntry> = walkdir
 		.into_iter()

@@ -1,4 +1,4 @@
-/* Copyright [2021] [Cerda]
+/* Copyright [2025] [Cerda]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -143,7 +143,7 @@
 //! up to `jobs` times.
 //!
 //! No/empty value: # of CPU threads. value = 0: maximum, of u8 (255)
-//!                                   
+//!
 //! ```
 //!
 //! [DIRECTORY]
@@ -188,20 +188,7 @@
 //!   E84E380AEBDA3D98E96267201D61784C3D6FFB128C4D669E6C1D994C7D7BF32B  Cross.toml
 //! ```
 
-#![deny(
-	anonymous_parameters,
-	clippy::all,
-	const_err,
-	illegal_floating_point_literal_pattern,
-	late_bound_lifetime_arguments,
-	path_statements,
-	patterns_in_fns_without_body,
-	rust_2018_idioms,
-	trivial_casts,
-	trivial_numeric_casts,
-	unsafe_code,
-	unused_extern_crates
-)]
+#![deny(unsafe_code)]
 #![allow(clippy::tabs_in_doc_comments)]
 
 mod algorithms;

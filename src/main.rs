@@ -1,4 +1,4 @@
-/* Copyright [2021] [Cerda]
+/* Copyright [2025] [Cerda]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ const BANNER: [&str; 13] = [
 	"   ░   ░  ░░░ ░ ░  ▒ ░░        ░ ░░ ░  ░ ░  ░   ░   ▒   ░  ░  ░   ░  ░░ ░",
 	"     ░       ░      ░  ░ ░      ░  ░      ░          ░  ░      ░   ░  ░  ░",
 	"",
-	"Made with <3  by Cerda. Repo: https://github.com/AndreVuillemot160/QuickDash/",
+	"Made with <3  by Cerda. Repo: https://github.com/iamtakingithard/QuickDash",
 	"",
 ];
 
